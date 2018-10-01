@@ -46,11 +46,11 @@ wss.on('connection', ws => {
         index = users.length;
         users.push({ name: data.name, id: data.uid });
         ws.send(JSON.stringify({
-          type: 'USERS_LIST',
+          type: 'ACTIVE_USERS',
           users,
         }));
         broadcast({
-          type: 'USERS_LIST',
+          type: 'ACTIVE_USERS',
           users,
         }, ws);
         break;
@@ -70,7 +70,7 @@ wss.on('connection', ws => {
   ws.on('close', () => {
     users.splice(index, 1);
     broadcast({
-      type: 'USERS_LIST',
+      type: 'ACTIVE_USERS',
       users,
     }, ws);
   });

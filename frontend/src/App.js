@@ -7,7 +7,6 @@ import pink from '@material-ui/core/colors/pink';
 import teal from '@material-ui/core/colors/teal';
 import createSagaMiddleware from 'redux-saga';
 
-
 import setupSocket from './sockets';
 import rootReducer from './reducers';
 import rootSaga from './sagas';
@@ -20,10 +19,14 @@ const store = createStore(rootReducer,
     applyMiddleware(sagaMiddleware),
   ));
 
-const socket = setupSocket(store.dispatch);
+const storage = localStorage.getItem('app');
+const parsed = JSON.parse(storage);
+const username = parsed.username;
+const uid = parsed.token;
 
-sagaMiddleware.run(rootSaga, { socket });
+const socket = setupSocket(store.dispatch, username, uid);
 
+sagaMiddleware.run(rootSaga, { socket, username, uid });
 
 const theme = createMuiTheme({
   palette: {

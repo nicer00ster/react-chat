@@ -21,6 +21,7 @@ class Chat extends React.Component {
         <EnhancedAppBar
           logout={this.props.logout}
           chat={this.props.chat}
+          activeUsers={this.props.user.activeUsers}
           focusedUser={this.props.focusedUser} />
         <EnhancedWrapper>
           <EnhancedInput username={this.props.user.username} />

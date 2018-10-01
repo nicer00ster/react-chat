@@ -41,7 +41,9 @@ module.exports = (app) => {
           } else {
             return res.send({
               success: true,
-              message: 'Authenticated!'
+              message: 'Authenticated!',
+              token: user._id,
+              username: user.username,
             })
           }
         });
@@ -105,6 +107,7 @@ module.exports = (app) => {
       const userSession = new UserSession();
       userSession.uid = user._id;
       userSession.username = user.username;
+      userSession.isActive = true;
       userSession.save((err, doc) => {
         if(err) {
           return res.send({
@@ -129,7 +132,7 @@ module.exports = (app) => {
     const { token } = query;
     UserSession.find({
       _id: token,
-      isActive: false
+      isActive: true
     }, (err, sessions) => {
       if(err) {
         return res.send({
@@ -143,6 +146,12 @@ module.exports = (app) => {
           message: 'Error: Invalid'
         });
       } else {
+        User.findOneAndUpdate({
+          username: sessions[0].username,
+          isActive: false,
+        }, {
+          $set: { isActive: true }
+        })
         return res.send({
           success: true,
           message: 'Successfully verified.',
@@ -158,9 +167,9 @@ module.exports = (app) => {
     console.log(token);
     UserSession.findOneAndUpdate({
       _id: token,
-      isActive: false
+      isActive: true
     }, {
-      $set: { isActive: true }
+      $set: { isActive: false }
     }, null, (err, sessions) => {
       if(err) {
         return res.send({

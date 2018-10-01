@@ -170,3 +170,19 @@ a {
 .EnhancedForm-paper-7 {
   background: url('./i-like-food.svg');
 }
+
+.chat__message {
+
+}
+
+.focused {
+  background-color: rgba(251, 153, 244, 0.5) !important;
+}
+
+.online {
+  background-color: rgba(128, 252, 85, 0.5) !important;
+}
+
+.offline {
+  opacity: 0.5;
+}

@@ -11,6 +11,7 @@ import {
   addMessage,
   verifyToken,
   fetchUsers,
+  focusedUser,
 } from './actions';
 
 class Root extends React.Component {
@@ -42,6 +43,7 @@ const mapDispatchToProps = {
   addMessage,
   verifyToken,
   fetchUsers,
+  focusedUser,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Root);

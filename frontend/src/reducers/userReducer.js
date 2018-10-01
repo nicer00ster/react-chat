@@ -7,6 +7,7 @@ const initialState = {
   isLoading: false,
   error: false,
   users: [],
+  activeUsers: [],
 };
 
 export default function userReducer(state = initialState, action = {}) {
@@ -81,6 +82,13 @@ export default function userReducer(state = initialState, action = {}) {
         fetching: false,
         users: action.users,
       };
+    case types.ACTIVE_USERS: {
+      console.log('ACTIVE_USERS', action.users);
+      return {
+        ...state,
+        activeUsers: action.users,
+      }
+    }
     case types.FETCH_USERS_FAILURE:
       return {
         ...state,

@@ -40,7 +40,7 @@ function apiRegister(data)  {
     method: 'post',
     url: '/api/account/register',
     data: {
-    username: data.username,
+      username: data.username,
       password: data.password,
     },
   });
@@ -68,12 +68,11 @@ function apiFetchUsers() {
 
 function* loginSaga(data) {
   yield delay(2000);
-  console.log(data);
   try {
     const response = yield call(apiLogin, data);
     const result = response.data;
     if(result.success) {
-      setToken('app', { token: result.token });
+      setToken('app', { token: result.token, username: data.username });
       yield put({ type: types.LOGIN_SUCCESS, result });
     } else {
       yield put({ type: types.LOGIN_FAILURE, error: result.message });
@@ -87,8 +86,9 @@ function* logoutSaga() {
   yield delay(1000);
   try {
     const response = yield call(apiLogout);
-    console.log(response);
+    console.log('logoutSaga', response);
     if(response.data.success) {
+      setToken('app', { token: null, username: null })
       yield put({ type: types.LOGOUT_SUCCESS, response });
     }
   } catch (error) {
@@ -102,7 +102,7 @@ function* registerSaga(data) {
     const response = yield call(apiRegister, data);
     const result = response.data;
     if(result.success) {
-      setToken('app', { token: result.token });
+      setToken('app', { token: result.token, username: data.username });
       yield put({ type: types.REGISTER_SUCCESS, result });
     } else yield put({ type: types.REGISTER_FAILURE, error: result.message });
   } catch (error) {
@@ -110,11 +110,13 @@ function* registerSaga(data) {
   }
 }
 
+let username;
 function* verifyTokenSaga() {
   try {
     const response = yield call(apiVerify);
     console.log('verifyTokenSaga', response);
     if (response.data.success) {
+      username = response.data.user;
       yield put({ type: types.VERIFIED_SUCCESS, data: response.data });
     } else yield put({ type: types.VERIFIED_FAILURE, data: response.data });
   } catch (error) {
@@ -125,7 +127,7 @@ function* verifyTokenSaga() {
 function* fetchUsersSaga() {
   try {
     const response = yield call(apiFetchUsers);
-    console.log(response);
+    console.log('fetchUsersSaga', response);
     yield put({ type: types.FETCH_USERS_SUCCESS, users: response.data });
   } catch (error) {
     yield put({ type: types.FETCH_USERS_FAILURE, error });
@@ -142,8 +144,8 @@ function* rootSaga(params) {
     takeEvery(types.FETCH_USERS, fetchUsersSaga),
     takeEvery(types.ADD_MESSAGE, action => {
       console.log('action', action);
-      action.sender = 'username';
-      params.socket.send(JSON.stringify(action));
+      action.sender = username;
+      params.socket.send(JSON.stringify(action, username));
     }),
   ]);
 }

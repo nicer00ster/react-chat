@@ -13,31 +13,7 @@ import EnhancedSidebar from './EnhancedSidebar';
 import EnhancedMessageList from './EnhancedMessageList';
 
 const drawerWidth = 240;
-
-const styles = theme => ({
-  root: {
-    flexGrow: 1,
-    height: 440,
-    zIndex: 1,
-    overflow: 'hidden',
-    position: 'relative',
-    display: 'flex',
-  },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-  },
-  drawerPaper: {
-    position: 'absolute',
-    width: drawerWidth,
-  },
-  content: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
-    padding: theme.spacing.unit * 3,
-    minWidth: 0,
-  },
-  toolbar: theme.mixins.toolbar,
-});
+import styles from './styles';
 
 function EnhancedAppBar(props) {
   const { classes } = props;
@@ -45,7 +21,7 @@ function EnhancedAppBar(props) {
   return (
     <div className={classes.root}>
       <AppBar position="absolute" className={classes.appBar}>
-        <Toolbar>
+        <Toolbar className={classes.appBarContent}>
           <Typography variant="title" color="inherit" noWrap>
             Chicken Chat
           </Typography>
@@ -68,6 +44,7 @@ function EnhancedAppBar(props) {
         <div className={classes.toolbar} />
         <List>
           <EnhancedSidebar
+            activeUsers={props.activeUsers}
             chat={props.chat}
             focusedUser={props.focusedUser} />
         </List>
@@ -84,7 +61,7 @@ function EnhancedAppBar(props) {
 EnhancedAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
   chat: PropTypes.object,
-  focusedUser: PropTypes.string,
+  focusedUser: PropTypes.func,
   logout: PropTypes.func.isRequired,
 };
 
