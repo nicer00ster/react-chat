@@ -33,8 +33,8 @@ $ yarn start
 * [Express](https://expressjs.com/)
 * [Jest](https://jestjs.io/)
 * [Enzyme](https://github.com/airbnb/enzyme)
-* [Web Sockets]('https://google.com')
-* [MongoDB]('https://google.com')
+* [Web Sockets](https://google.com)
+* [MongoDB](https://google.com)
 
 
 ## Authors
