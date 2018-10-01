@@ -5,14 +5,13 @@ const setupSocket = (dispatch, username, uid) => {
   const socket = new WebSocket('ws://10.0.40.58:8989');
 
   socket.onopen = () => {
-    if(username && uid) {
-      socket.send(JSON.stringify({
-        type: types.ADD_USER,
-        name: username,
-        uid,
-      }))
-    }
+    socket.send(JSON.stringify({
+      type: types.ADD_USER,
+      name: username,
+      uid,
+    }))
   }
+
   socket.onmessage = (event) => {
     const data = JSON.parse(event.data);
     console.log('onmessage', data);

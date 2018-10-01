@@ -16,7 +16,8 @@ const EnhancedSidebar = props => (
       ONLINE
     </Typography>
     {Object.values(props.activeUsers).map(user => (
-      <ListItem
+      user.name !== null
+      ? <ListItem
         onClick={e => props.focusedUser(e.target.textContent)}
         className={classNames([
           props.chat.focusedUser === user.name ? 'focused' : null,
@@ -27,6 +28,7 @@ const EnhancedSidebar = props => (
         <Avatar alt={user.name} src={'http://i.pravatar.cc/150?img=3'} />
         <ListItemText primary={user.name} />
       </ListItem>
+      :null
     ))}
     <Divider style={{ marginBottom: '1rem', marginTop: '1rem' }} />
     <Typography align="center" variant="caption">

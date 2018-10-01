@@ -44,7 +44,8 @@ wss.on('connection', ws => {
     switch (data.type) {
       case 'ADD_USER': {
         index = users.length;
-        users.push({ name: data.name, id: data.uid });
+        if (data.name === null) return;
+        else users.push({ name: data.name, id: data.uid });
         ws.send(JSON.stringify({
           type: 'ACTIVE_USERS',
           users,

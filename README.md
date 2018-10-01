@@ -1,4 +1,4 @@
-# React Boilerplate
+# React Chat Application
 
 ## Getting Started
 
@@ -11,7 +11,7 @@ Step by step instructions that tell you how to get a development environment run
 
 Development
 ```sh
-$ git clone https://github.com/nicer00ster/react-boilerplate
+$ git clone https://github.com/nicer00ster/react-chat
 $ cd react-boilerplate
 $ yarn
 $ yarn dev
@@ -33,6 +33,8 @@ $ yarn start
 * [Express](https://expressjs.com/)
 * [Jest](https://jestjs.io/)
 * [Enzyme](https://github.com/airbnb/enzyme)
+* [Web Sockets]('https://google.com')
+* [MongoDB]('https://google.com')
 
 
 ## Authors
