@@ -35,9 +35,10 @@ export function register(e, username, password) {
   }
 }
 
-export function logout() {
+export function logout(user) {
   return {
     type: types.LOGOUT,
+    user,
   };
 }
 

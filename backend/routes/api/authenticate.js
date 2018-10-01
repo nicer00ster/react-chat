@@ -130,6 +130,7 @@ module.exports = (app) => {
   app.get('/api/account/verify', (req, res, next) => {
     const { query } = req;
     const { token } = query;
+    let username;
     UserSession.find({
       _id: token,
       isActive: true
@@ -151,12 +152,13 @@ module.exports = (app) => {
           isActive: false,
         }, {
           $set: { isActive: true }
-        })
-        return res.send({
-          success: true,
-          message: 'Successfully verified.',
-          user: sessions[0].username,
-        })
+        }, null, () => {
+          return res.send({
+            success: true,
+            message: 'Successfully verified.',
+            user: sessions[0].username,
+          })
+        });
       }
     })
   })
@@ -164,7 +166,6 @@ module.exports = (app) => {
   app.get('/api/account/logout', (req, res, next) => {
     const { query } = req;
     const { token } = query;
-    console.log(token);
     UserSession.findOneAndUpdate({
       _id: token,
       isActive: true
@@ -178,10 +179,17 @@ module.exports = (app) => {
         });
       }
       if(sessions) {
-        return res.send({
-          success: true,
-          message: 'Successfully logged out.'
-        })
+        User.findOneAndUpdate({
+          username: sessions.username,
+          isActive: true,
+        }, {
+          $set: { isActive: false }
+        }, null, () => {
+          return res.send({
+            success: true,
+            message: 'Successfully logged out.'
+          })
+        });
       } else {
         return res.send({
           success: false,

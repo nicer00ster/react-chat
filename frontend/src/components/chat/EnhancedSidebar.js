@@ -15,39 +15,40 @@ const EnhancedSidebar = props => (
     <Typography align="center" variant="caption">
       ONLINE
     </Typography>
-    {Object.values(props.activeUsers).map(user => (
-      user.name !== null
+    {Object.values(props.users).map(user => (
+      user.isActive
       ? <ListItem
-        onClick={e => props.focusedUser(e.target.textContent)}
-        className={classNames([
-          props.chat.focusedUser === user.name ? 'focused' : null,
-        ])}
-        key={user.id}
-        dense
-        button>
-        <Avatar alt={user.name} src={'http://i.pravatar.cc/150?img=3'} />
-        <ListItemText primary={user.name} />
-      </ListItem>
-      :null
+          onClick={e => props.focusedUser(e.target.textContent)}
+          className={classNames([
+            props.chat.focusedUser === user.username ? 'focused' : null,
+            !user.isActive ? 'offline' : null
+          ])}
+          key={user._id}
+          dense
+          button>
+          <Avatar alt={user.username} src={'http://i.pravatar.cc/150?img=3'} />
+          <ListItemText primary={user.username} />
+        </ListItem>
+      : null
     ))}
     <Divider style={{ marginBottom: '1rem', marginTop: '1rem' }} />
     <Typography align="center" variant="caption">
       OFFLINE
     </Typography>
     {Object.values(props.users).map(user => (
-      user.isActive === false
+      !user.isActive
       ? <ListItem
-        onClick={e => props.focusedUser(e.target.textContent)}
-        className={classNames([
-          props.chat.focusedUser === user.username ? 'focused' : null,
-          'offline',
-        ])}
-        key={user._id}
-        dense
-        button>
-        <Avatar alt={user.username} src={'http://i.pravatar.cc/150?img=3'} />
-        <ListItemText primary={user.username} />
-      </ListItem>
+          onClick={e => props.focusedUser(e.target.textContent)}
+          className={classNames([
+            props.chat.focusedUser === user.username ? 'focused' : null,
+            'offline'
+          ])}
+          key={user._id}
+          dense
+          button>
+          <Avatar alt={user.username} src={'http://i.pravatar.cc/150?img=3'} />
+          <ListItemText primary={user.username} />
+        </ListItem>
       : null
     ))}
   </List>
