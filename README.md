@@ -12,7 +12,7 @@ Step by step instructions that tell you how to get a development environment run
 Development
 ```sh
 $ git clone https://github.com/nicer00ster/react-chat
-$ cd react-boilerplate
+$ cd react-chat
 $ yarn
 $ yarn dev
 ```
