@@ -171,8 +171,16 @@ a {
   background: url('./i-like-food.svg');
 }
 
-.chat__message {
+#root {
+  border: 1px solid rgba(#000000, 0.25);
+}
 
+.chat__message {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  // padding: 1rem;
+  // margin: 1rem;
 }
 
 .focused {

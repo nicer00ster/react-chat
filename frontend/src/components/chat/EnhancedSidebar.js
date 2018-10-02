@@ -15,21 +15,21 @@ const EnhancedSidebar = props => (
     <Typography align="center" variant="caption">
       ONLINE
     </Typography>
-    {Object.values(props.users).map(user => (
-      user.isActive
-      ? <ListItem
+    {Object.values(props.activeUsers).map(user => (
+      // user.isActive
+       <ListItem
           onClick={e => props.focusedUser(e.target.textContent)}
           className={classNames([
-            props.chat.focusedUser === user.username ? 'focused' : null,
-            !user.isActive ? 'offline' : null
+            props.chat.focusedUser === user.name ? 'focused' : null,
+            // !user.isActive ? 'offline' : null
           ])}
           key={user._id}
           dense
           button>
-          <Avatar alt={user.username} src={'http://i.pravatar.cc/150?img=3'} />
-          <ListItemText primary={user.username} />
+          <Avatar alt={user.name} src={'http://i.pravatar.cc/150?img=3'} />
+          <ListItemText primary={user.name} />
         </ListItem>
-      : null
+      // : null
     ))}
     <Divider style={{ marginBottom: '1rem', marginTop: '1rem' }} />
     <Typography align="center" variant="caption">
