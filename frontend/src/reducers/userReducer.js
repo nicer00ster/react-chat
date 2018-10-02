@@ -7,7 +7,7 @@ const initialState = {
   isLoading: false,
   error: false,
   users: [],
-  activeUsers: [],
+  offlineUsers: [],
 };
 
 export default function userReducer(state = initialState, action = {}) {
@@ -80,13 +80,30 @@ export default function userReducer(state = initialState, action = {}) {
       return {
         ...state,
         fetching: false,
-        users: action.users,
+        offlineUsers: action.users,
       };
     case types.ACTIVE_USERS: {
       console.log('ACTIVE_USERS', action.users);
       return {
         ...state,
         activeUsers: action.users,
+      }
+    }
+    case types.ADD_USER: {
+      console.log('ADD_USER', action);
+      return {
+        ...state,
+        users: state.users.concat([
+          {
+            name: action.name,
+            id: action.id,
+          },
+        ]),
+      };
+    }
+    case types.REMOVE_USER: {
+      return {
+        ...state,
       }
     }
     case types.FETCH_USERS_FAILURE:

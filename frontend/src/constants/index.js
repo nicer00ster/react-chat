@@ -33,4 +33,5 @@ export const FOCUSED_USER = 'FOCUSED_USER';
 export const ADD_MESSAGE = 'ADD_MESSAGE';
 export const MESSAGE_RECEIVED = 'MESSAGE_RECEIVED';
 export const ADD_USER = 'ADD_USER';
+export const REMOVE_USER = 'REMOVE_USER';
 export const ACTIVE_USERS = 'ACTIVE_USERS';

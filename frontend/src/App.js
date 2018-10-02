@@ -11,6 +11,9 @@ import setupSocket from './sockets';
 import rootReducer from './reducers';
 import rootSaga from './sagas';
 import Root from './Root';
+import io from 'socket.io-client';
+
+const connectSocket = io.connect('http://10.0.40.58:8080');
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -19,14 +22,16 @@ const store = createStore(rootReducer,
     applyMiddleware(sagaMiddleware),
   ));
 
+const socket = setupSocket(store.dispatch, connectSocket);
+
 const storage = localStorage.getItem('app');
 const parsed = JSON.parse(storage);
 const username = parsed.username;
 const uid = parsed.token;
 
-const socket = setupSocket(store.dispatch, username, uid);
 
-sagaMiddleware.run(rootSaga, { socket, username, uid });
+// sagaMiddleware.run(rootSaga, { socket, username, uid });
+sagaMiddleware.run(rootSaga, { socket, dispatch: store.dispatch });
 
 const theme = createMuiTheme({
   palette: {

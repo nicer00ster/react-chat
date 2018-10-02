@@ -85,8 +85,8 @@ export function addMessage(message, sender) {
   };
 }
 
-export function addUser(name, uid) {
-  console.log('addUser', name, uid);
+export function addUser(name) {
+  console.log('addUser', name);
   return {
     type: types.ADD_USER,
     id: nextUserId++,
@@ -104,7 +104,7 @@ export function messageReceived(message, sender) {
 }
 
 export function populateUsersList(users) {
-  console.log('here', users);
+  console.log('here101', users);
   return {
     type: types.ACTIVE_USERS,
     users,

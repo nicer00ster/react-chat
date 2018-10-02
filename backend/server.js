@@ -1,84 +1,117 @@
 const express = require('express');
+const app = express();
 const path = require('path');
 const fs = require('fs');
 const axios = require('axios');
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
 const historyApiFallback = require('connect-history-api-fallback');
 const mongoose = require('mongoose');
 const webpack = require('webpack');
-const WebSocket = require('ws');
+// const WebSocket = require('ws');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 
 const config = require('../config/index');
 const webpackConfig = require('../webpack.config');
 
-const wss = new WebSocket.Server({ port: 8989 });
+// const wss = new WebSocket.Server({ port: 8989 });
 const port = process.env.PORT || 8080;
 const dev = process.env.NODE_ENV !== 'production';
 
 mongoose.connect(config.DATABASE);
 mongoose.Promise = global.Promise;
 
-const app = express();
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 require('./routes')(app);
 
-const broadcast = (data, ws) => {
-  wss.clients.forEach(client => {
-    if (client.readyState === WebSocket.OPEN && client !== ws) {
-      client.send(JSON.stringify(data));
-    }
-  });
-};
+io.on('connection', function(socket){
+  console.log('User connected: ', socket.id);
+  socket.join('lobby');
 
-const users = [];
-
-wss.on('connection', ws => {
-  let index;
-
-  ws.on('message', message => {
-    const data = JSON.parse(message);
-    console.log('aSDFASFDASDF', data);
-    switch (data.type) {
-      case 'ADD_USER': {
-        index = users.length;
-        const userArray = users.map(user => user.name);
-        if (data.name === null || userArray.indexOf(data.name) > -1) return;
-        else users.push({ name: data.name, id: data.uid });
-        ws.send(JSON.stringify({
-          type: 'ACTIVE_USERS',
-          users,
-        }));
-        broadcast({
-          type: 'ACTIVE_USERS',
-          users,
-        }, ws);
+  socket.on('connect', function(data) {
+    console.log('open', data);
+    switch(data.type) {
+      case 'ADD_USER':
+        socket.broadcast.emit('connect', users);
         break;
-      }
+      default:
+        break;
+    }
+  })
+
+  socket.on('message', function(data) {
+    console.log('incoming message from: ', data.sender, ' ', data.message);
+    switch(data.type) {
       case 'ADD_MESSAGE':
-        broadcast({
-          type: 'ADD_MESSAGE',
-          message: data.message,
-          sender: data.sender,
-        }, ws);
+        socket.broadcast.emit('message', data);
         break;
       default:
         break;
     }
   });
 
-  ws.on('close', () => {
-    users.splice(index, 1);
-    broadcast({
-      type: 'ACTIVE_USERS',
-      users,
-    }, ws);
-  });
+  socket.on('disconnect', function() {
+    console.log('User disconnected: ', socket.id);
+  })
 
 });
+
+// const broadcast = (data, ws) => {
+//   wss.clients.forEach(client => {
+//     if (client.readyState === WebSocket.OPEN && client !== ws) {
+//       client.send(JSON.stringify(data));
+//     }
+//   });
+// };
+//
+// const users = [];
+//
+// wss.on('connection', ws => {
+//   let index;
+//
+//   ws.on('message', message => {
+//     const data = JSON.parse(message);
+//     console.log('aSDFASFDASDF', data);
+//     switch (data.type) {
+//       case 'ADD_USER': {
+//         index = users.length;
+//         const userArray = users.map(user => user.name);
+//         if (data.name === null || userArray.indexOf(data.name) > -1) return;
+//         else users.push({ name: data.name, id: data.uid });
+//         ws.send(JSON.stringify({
+//           type: 'ACTIVE_USERS',
+//           users,
+//         }));
+//         broadcast({
+//           type: 'ACTIVE_USERS',
+//           users,
+//         }, ws);
+//         break;
+//       }
+//       case 'ADD_MESSAGE':
+//         broadcast({
+//           type: 'ADD_MESSAGE',
+//           message: data.message,
+//           sender: data.sender,
+//         }, ws);
+//         break;
+//       default:
+//         break;
+//     }
+//   });
+//
+//   ws.on('close', () => {
+//     users.splice(index, 1);
+//     broadcast({
+//       type: 'ACTIVE_USERS',
+//       users,
+//     }, ws);
+//   });
+//
+// });
 
 if(dev) {
   const compiler = webpack(webpackConfig);
@@ -109,7 +142,7 @@ if(dev) {
   });
 }
 
-app.listen(port, '0.0.0.0', err => {
+http.listen(port, '0.0.0.0', err => {
   if(err) {
     console.error(err);
   }

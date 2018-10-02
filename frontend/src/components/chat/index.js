@@ -12,6 +12,7 @@ import styles from './styles';
 
 class Chat extends React.Component {
   componentDidMount() {
+    this.props.addUser(this.props.user.username);
     this.props.fetchUsers();
   }
   render() {
@@ -47,10 +48,5 @@ Chat.propTypes = {
   }),
 };
 
-const mapDispatchToProps = dispatch => ({
-  dispatch: name => {
-    dispatch(addUser(name));
-  },
-});
 
-export default connect(null, mapDispatchToProps)(withStyles(styles)(Chat));
+export default withStyles(styles)(Chat);

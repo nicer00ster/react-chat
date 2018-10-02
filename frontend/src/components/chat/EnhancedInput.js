@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import io from 'socket.io-client';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
@@ -9,9 +10,11 @@ import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
 import Message from '@material-ui/icons/Message';
 import Send from '@material-ui/icons/Send';
+// import { message } from '../../sockets';
 import { addMessage } from '../../actions';
 import styles from './styles';
 
+const socket = io.connect('http://10.0.40.58:8080');
 
 function EnhancedInput(props) {
   let input;

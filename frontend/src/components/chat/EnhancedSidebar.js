@@ -15,7 +15,7 @@ const EnhancedSidebar = props => (
     <Typography align="center" variant="caption">
       ONLINE
     </Typography>
-    {Object.values(props.activeUsers).map(user => (
+    {props.users.map(user => (
       // user.isActive
        <ListItem
           onClick={e => props.focusedUser(e.target.textContent)}

@@ -7,10 +7,11 @@ import {
   fork,
 } from 'redux-saga/effects';
 import axios from 'axios';
+
 import { verifyToken, setToken } from '../utils/storage';
 import * as types from '../constants';
+import { messageReceived } from '../actions';
 import { delay } from 'redux-saga';
-
 
 function apiLogin(data) {
   return axios({
@@ -135,17 +136,19 @@ function* fetchUsersSaga() {
 }
 
 function* rootSaga(params) {
-  console.log('params', params);
+  console.log('socket', params);
   yield all([
     takeEvery(types.REGISTER, registerSaga),
     takeEvery(types.LOGIN, loginSaga),
     takeEvery(types.LOGOUT, logoutSaga),
     takeEvery(types.VERIFIED, verifyTokenSaga),
     takeEvery(types.FETCH_USERS, fetchUsersSaga),
-    takeEvery(types.ADD_MESSAGE, action => {
-      console.log('action', action);
-      action.sender = username;
-      params.socket.send(JSON.stringify(action, username));
+    takeEvery(types.ADD_USER, data => {
+      console.log('saga', data);
+      params.socket.emit('connect', data);
+    }),
+    takeEvery(types.ADD_MESSAGE, data => {
+      params.socket.emit('message', data);
     }),
   ]);
 }

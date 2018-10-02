@@ -1,3 +1,4 @@
+const Message = require('../../models/Message');
 const User = require('../../models/User');
 const UserSession = require('../../models/UserSession');
 const bcrypt = require('bcrypt-nodejs');
@@ -197,6 +198,29 @@ module.exports = (app) => {
         });
       }
     })
+  });
+
+  // query DB for ALL messages
+  app.get('/api/messages', function(req, res) {
+    Message.find({}, {id: 1, channelID: 1, text: 1, user: 1, time: 1, _id: 0}, function(err, data) {
+      if(err) {
+        console.log(err);
+        return res.status(500).json({msg: 'internal server error'});
+      }
+      res.json(data);
+    });
+  });
+
+  app.post('/api/newmessage', function(req, res) {
+    console.log(req.body);
+    var newMessage = new Message(req.body);
+    newMessage.save(function (err, data) {
+      if(err) {
+        console.log(err);
+        return res.status(500).json({msg: 'internal server error'});
+      }
+      res.json(data);
+    });
   });
 
 };
