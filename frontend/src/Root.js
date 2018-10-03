@@ -12,6 +12,7 @@ import {
   verifyToken,
   fetchUsers,
   focusedUser,
+  populateUsersList,
   addUser,
 } from './actions';
 
@@ -45,6 +46,7 @@ const mapDispatchToProps = {
   verifyToken,
   fetchUsers,
   focusedUser,
+  populateUsersList,
   addUser,
 };
 

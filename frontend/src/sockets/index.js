@@ -4,11 +4,14 @@ import { messageReceived, populateUsersList, addUser } from '../actions';
 
 const setupSocket = (dispatch, socket) => {
 
-  socket.on('connect', data => {
+  socket.on('user', data => {
     console.log('hererererrrere, da', data);
     switch(data.type) {
-      case types.ACTIVE_USERS:
-        dispatch(populateUsersList(data));
+      case types.ADD_USER:
+        dispatch(addUser(data));
+        break;
+      case types.REMOVE_USER:
+        // dispatch(removeUser(data));
         break;
       default:
         break;
@@ -21,9 +24,6 @@ const setupSocket = (dispatch, socket) => {
       case types.ADD_MESSAGE:
         dispatch(messageReceived(data.message, data.sender));
         break;
-      // case types.ADD_USER:
-      //   dispatch(addUser(data.name));
-      //   break;
       default:
         break;
     }

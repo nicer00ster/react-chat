@@ -27,20 +27,11 @@ app.use(express.json());
 
 require('./routes')(app);
 
+const users = [];
+
 io.on('connection', function(socket){
   console.log('User connected: ', socket.id);
   socket.join('lobby');
-
-  socket.on('connect', function(data) {
-    console.log('open', data);
-    switch(data.type) {
-      case 'ADD_USER':
-        socket.broadcast.emit('connect', users);
-        break;
-      default:
-        break;
-    }
-  })
 
   socket.on('message', function(data) {
     console.log('incoming message from: ', data.sender, ' ', data.message);
@@ -53,11 +44,23 @@ io.on('connection', function(socket){
     }
   });
 
+  socket.on('user', function(user) {
+    console.log('added user: ', user.name);
+    switch(user.type) {
+      case 'ADD_USER':
+        socket.broadcast.emit('user', { name: user.name, id: user.id });
+        break;
+      default:
+        break;
+    }
+  })
+
   socket.on('disconnect', function() {
     console.log('User disconnected: ', socket.id);
   })
 
 });
+
 
 // const broadcast = (data, ws) => {
 //   wss.clients.forEach(client => {

@@ -10,14 +10,14 @@ module.exports = (app) => {
     if(!username) {
       return res.send({
         success: false,
-        message: 'Error: Username name cannot be empty.'
-      })
+        message: 'Error: Username name cannot be empty.',
+      });
     }
     if(!password) {
       return res.send({
         success: false,
-        message: 'Error: Password field cannot be empty.'
-      })
+        message: 'Error: Password field cannot be empty.',
+      });
     }
 
     User.find({
@@ -27,7 +27,7 @@ module.exports = (app) => {
         return res.send({
           success: false,
           message: 'Error: Account already exists.',
-        })
+        });
       } else {
         const newUser = new User();
         newUser.username = username;
@@ -198,29 +198,6 @@ module.exports = (app) => {
         });
       }
     })
-  });
-
-  // query DB for ALL messages
-  app.get('/api/messages', function(req, res) {
-    Message.find({}, {id: 1, channelID: 1, text: 1, user: 1, time: 1, _id: 0}, function(err, data) {
-      if(err) {
-        console.log(err);
-        return res.status(500).json({msg: 'internal server error'});
-      }
-      res.json(data);
-    });
-  });
-
-  app.post('/api/newmessage', function(req, res) {
-    console.log(req.body);
-    var newMessage = new Message(req.body);
-    newMessage.save(function (err, data) {
-      if(err) {
-        console.log(err);
-        return res.status(500).json({msg: 'internal server error'});
-      }
-      res.json(data);
-    });
   });
 
 };

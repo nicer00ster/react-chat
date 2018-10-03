@@ -7,7 +7,6 @@ import { withStyles } from '@material-ui/core/styles';
 import EnhancedAppBar from './EnhancedAppBar';
 import EnhancedInput from './EnhancedInput';
 import EnhancedWrapper from './EnhancedWrapper';
-// import { addUser } from '../../actions';
 import styles from './styles';
 
 class Chat extends React.Component {

@@ -104,7 +104,6 @@ export function messageReceived(message, sender) {
 }
 
 export function populateUsersList(users) {
-  console.log('here101', users);
   return {
     type: types.ACTIVE_USERS,
     users,

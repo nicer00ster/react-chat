@@ -13,7 +13,7 @@ import rootSaga from './sagas';
 import Root from './Root';
 import io from 'socket.io-client';
 
-const connectSocket = io.connect('http://10.0.40.58:8080');
+const connectSocket = io.connect('http://localhost:8080');
 
 const sagaMiddleware = createSagaMiddleware();
 

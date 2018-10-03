@@ -14,7 +14,7 @@ import Send from '@material-ui/icons/Send';
 import { addMessage } from '../../actions';
 import styles from './styles';
 
-const socket = io.connect('http://10.0.40.58:8080');
+const socket = io.connect('http://localhost:8080');
 
 function EnhancedInput(props) {
   let input;

@@ -145,7 +145,7 @@ function* rootSaga(params) {
     takeEvery(types.FETCH_USERS, fetchUsersSaga),
     takeEvery(types.ADD_USER, data => {
       console.log('saga', data);
-      params.socket.emit('connect', data);
+      params.socket.emit('user', data);
     }),
     takeEvery(types.ADD_MESSAGE, data => {
       params.socket.emit('message', data);
