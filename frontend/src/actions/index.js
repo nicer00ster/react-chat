@@ -109,3 +109,18 @@ export function populateUsersList(users) {
     users,
   };
 }
+
+export function addTypingUser(uid) {
+  console.log('addTypingUser', uid);
+   return {
+     type: types.ADD_TYPING_USER,
+     payload: uid,
+   };
+ }
+ export function removeTypingUser(uid) {
+   console.log('removeTypingUser', uid);
+   return {
+     type: types.REMOVE_TYPING_USER,
+     payload: uid,
+   };
+ }

@@ -27,11 +27,10 @@ app.use(express.json());
 
 require('./routes')(app);
 
-const users = [];
+let users = [];
 
-io.on('connection', function(socket){
+io.on('connection', function(socket) {
   console.log('User connected: ', socket.id);
-  socket.join('lobby');
 
   socket.on('message', function(data) {
     console.log('incoming message from: ', data.sender, ' ', data.message);
@@ -45,76 +44,45 @@ io.on('connection', function(socket){
   });
 
   socket.on('user', function(user) {
-    console.log('added user: ', user.name);
+    console.log('added user: ', user);
+    console.log('current users: ', users);
     switch(user.type) {
       case 'ADD_USER':
-        socket.broadcast.emit('user', { name: user.name, id: user.id });
+        user.id = socket.id;
+        users.push({ type: user.type, name: user.name, id: socket.id });
+        io.emit('user', { type: 'ACTIVE_USERS', users });
+        break;
+      case 'ACTIVE_USERS':
+        console.log('firing activeusers', users);
+        io.emit('user', users);
         break;
       default:
         break;
     }
   })
 
+  socket.on('typing', function(data) {
+    console.log('user is typing: ', data);
+    socket.broadcast.emit('typing', data);
+      // switch(data.type) {
+      //   case 'ADD_TYPING_USER':
+      //     socket.broadcast.emit('typing', data);
+      //     break;
+      //   case 'REMOVE_TYPING_USER':
+      //     socket.broadcast.emit('typing', data);
+      //     break;
+      //   default:
+      //   break;
+      // }
+  });
+
   socket.on('disconnect', function() {
     console.log('User disconnected: ', socket.id);
-  })
+    users = users.filter(user => user.id !== socket.id)
+    io.emit('user', { type: 'ACTIVE_USERS', users });
+  });
 
 });
-
-
-// const broadcast = (data, ws) => {
-//   wss.clients.forEach(client => {
-//     if (client.readyState === WebSocket.OPEN && client !== ws) {
-//       client.send(JSON.stringify(data));
-//     }
-//   });
-// };
-//
-// const users = [];
-//
-// wss.on('connection', ws => {
-//   let index;
-//
-//   ws.on('message', message => {
-//     const data = JSON.parse(message);
-//     console.log('aSDFASFDASDF', data);
-//     switch (data.type) {
-//       case 'ADD_USER': {
-//         index = users.length;
-//         const userArray = users.map(user => user.name);
-//         if (data.name === null || userArray.indexOf(data.name) > -1) return;
-//         else users.push({ name: data.name, id: data.uid });
-//         ws.send(JSON.stringify({
-//           type: 'ACTIVE_USERS',
-//           users,
-//         }));
-//         broadcast({
-//           type: 'ACTIVE_USERS',
-//           users,
-//         }, ws);
-//         break;
-//       }
-//       case 'ADD_MESSAGE':
-//         broadcast({
-//           type: 'ADD_MESSAGE',
-//           message: data.message,
-//           sender: data.sender,
-//         }, ws);
-//         break;
-//       default:
-//         break;
-//     }
-//   });
-//
-//   ws.on('close', () => {
-//     users.splice(index, 1);
-//     broadcast({
-//       type: 'ACTIVE_USERS',
-//       users,
-//     }, ws);
-//   });
-//
-// });
 
 if(dev) {
   const compiler = webpack(webpackConfig);

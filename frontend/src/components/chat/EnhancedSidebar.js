@@ -15,27 +15,24 @@ const EnhancedSidebar = props => (
     <Typography align="center" variant="caption">
       ONLINE
     </Typography>
-    {props.users.map(user => (
-      // user.isActive
+    {Object.values(props.users).map(user => (
        <ListItem
           onClick={e => props.focusedUser(e.target.textContent)}
           className={classNames([
             props.chat.focusedUser === user.name ? 'focused' : null,
-            // !user.isActive ? 'offline' : null
           ])}
-          key={user._id}
+          key={user.id}
           dense
           button>
           <Avatar alt={user.name} src={'http://i.pravatar.cc/150?img=3'} />
           <ListItemText primary={user.name} />
         </ListItem>
-      // : null
     ))}
     <Divider style={{ marginBottom: '1rem', marginTop: '1rem' }} />
     <Typography align="center" variant="caption">
       OFFLINE
     </Typography>
-    {Object.values(props.users).map(user => (
+    {/* {Object.values(props.users).map(user => (
       !user.isActive
       ? <ListItem
           onClick={e => props.focusedUser(e.target.textContent)}
@@ -50,7 +47,7 @@ const EnhancedSidebar = props => (
           <ListItemText primary={user.username} />
         </ListItem>
       : null
-    ))}
+    ))} */}
   </List>
 );
 

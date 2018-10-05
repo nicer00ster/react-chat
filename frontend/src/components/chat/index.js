@@ -24,7 +24,9 @@ class Chat extends React.Component {
           activeUsers={this.props.user.activeUsers}
           focusedUser={this.props.focusedUser} />
         <EnhancedWrapper>
-          <EnhancedInput username={this.props.user.username} />
+          <EnhancedInput
+            uid={this.props.user.id}
+            username={this.props.user.username} />
         </EnhancedWrapper>
       </React.Fragment>
     );

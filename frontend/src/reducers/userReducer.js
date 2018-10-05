@@ -3,10 +3,12 @@ import * as types from '../constants';
 const initialState = {
   username: '',
   password: '',
+  id: '',
   authenticated: false,
   isLoading: false,
   error: false,
   users: [],
+  usersTyping: [],
   offlineUsers: [],
 };
 
@@ -25,9 +27,11 @@ export default function userReducer(state = initialState, action = {}) {
         isLoading: true,
       };
     case types.VERIFIED_SUCCESS:
+      console.log('VERIFIED_SUCCESS', action);
       return {
         ...state,
         username: action.data.user,
+        id: action.data.id,
         authenticated: true,
         error: false,
       }
@@ -86,7 +90,7 @@ export default function userReducer(state = initialState, action = {}) {
       console.log('ACTIVE_USERS', action.users);
       return {
         ...state,
-        activeUsers: action.users,
+        users: action.users.users,
       }
     }
     case types.ADD_USER: {
@@ -94,10 +98,7 @@ export default function userReducer(state = initialState, action = {}) {
       return {
         ...state,
         users: state.users.concat([
-          {
-            name: action.name,
-            id: action.id,
-          },
+          { name: action.name, id: action.id },
         ]),
       };
     }
@@ -112,6 +113,20 @@ export default function userReducer(state = initialState, action = {}) {
         fetching: false,
         error: action.error,
       };
+    case types.ADD_TYPING_USER:
+      // return state.update('usersTyping', (users) => (users.indexOf(action.payload) >= 0 ? users : users.concat(action.payload)));
+      console.log('ADD_TYPING_USER', action);
+      return {
+        ...state,
+        usersTyping: Object.values(state.offlineUsers).filter(user => user._id === action.payload),
+      }
+    case types.REMOVE_TYPING_USER:
+      console.log('REMOVE_TYPING_USER', action);
+      return {
+        ...state,
+        usersTyping: Object.values(state.usersTyping).filter(user => user._id !== action.payload),
+      }
+      // return state.update('usersTyping', (users) => users.filter((userID) => userID !== action.payload));
     default:
       return state;
   }

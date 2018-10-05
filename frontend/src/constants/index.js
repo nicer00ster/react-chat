@@ -35,3 +35,5 @@ export const MESSAGE_RECEIVED = 'MESSAGE_RECEIVED';
 export const ADD_USER = 'ADD_USER';
 export const REMOVE_USER = 'REMOVE_USER';
 export const ACTIVE_USERS = 'ACTIVE_USERS';
+export const ADD_TYPING_USER = 'ADD_TYPING_USER';
+export const REMOVE_TYPING_USER = 'REMOVE_TYPING_USER';

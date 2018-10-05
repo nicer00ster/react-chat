@@ -75,11 +75,12 @@ const styles = theme => ({
   },
   content: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.primary,
+    backgroundColor: '#fefefe',
     padding: theme.spacing.unit * 1,
     height: '100%',
     overflowY: 'scroll',
     overflowX: 'hidden',
+    // border: '1px solid black',
   },
   toolbar: theme.mixins.toolbar,
   flex: {

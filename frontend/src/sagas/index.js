@@ -1,5 +1,6 @@
 import {
   takeEvery,
+  takeLatest,
   put,
   call,
   take,
@@ -147,8 +148,24 @@ function* rootSaga(params) {
       console.log('saga', data);
       params.socket.emit('user', data);
     }),
+    takeEvery(types.ACTIVE_USERS, data => {
+      console.log('active users saga', data);
+      params.socket.emit('user', data);
+    }),
     takeEvery(types.ADD_MESSAGE, data => {
       params.socket.emit('message', data);
+    }),
+    takeEvery(types.ADD_TYPING_USER, data => {
+      console.log('sagatyping', data);
+      if(data.payload) {
+        params.socket.emit('typing', data)
+      }
+    }),
+    takeEvery(types.REMOVE_TYPING_USER, data => {
+      console.log('saga remove typing', data);
+      if(data.payload) {
+        params.socket.emit('typing', data)
+      }
     }),
   ]);
 }

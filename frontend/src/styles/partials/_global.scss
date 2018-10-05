@@ -95,7 +95,19 @@ body {
       -moz-osx-font-smoothing: grayscale;
   font-family: 'Roboto';
   letter-spacing: .5px;
-  background: #fefefe;
+  background: -webkit-gradient(
+      linear,
+      left top, left bottom,
+      from(rgba(0, 0, 0, 0.5)),
+      to(rgba(0, 0, 0, 0.5))
+    ), url('./bg.jpg');
+  background: linear-gradient(
+      rgba(0, 0, 0, 0.5),
+      rgba(0, 0, 0, 0.5)
+    ), url('./bg.jpg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
   color: #1f222e;
   font-size: 1.4rem;
   height: 100vh;
@@ -103,7 +115,7 @@ body {
 }
 
 #root {
-  width: 1000px;
+  width: 65vw;
 }
 
 a {
@@ -171,10 +183,6 @@ a {
   background: url('./i-like-food.svg');
 }
 
-#root {
-  border: 1px solid rgba(#000000, 0.25);
-}
-
 .chat__message {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -184,7 +192,7 @@ a {
 }
 
 .focused {
-  background-color: rgba(251, 153, 244, 0.5) !important;
+  background-color: rgba(0, 0, 0, 0.15) !important;
 }
 
 .online {

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import io from 'socket.io-client';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Input from '@material-ui/core/Input';
@@ -10,11 +9,9 @@ import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
 import Message from '@material-ui/icons/Message';
 import Send from '@material-ui/icons/Send';
-// import { message } from '../../sockets';
-import { addMessage } from '../../actions';
-import styles from './styles';
 
-const socket = io.connect('http://localhost:8080');
+import { addMessage, addTypingUser, removeTypingUser } from '../../actions';
+import styles from './styles';
 
 function EnhancedInput(props) {
   let input;
@@ -26,9 +23,13 @@ function EnhancedInput(props) {
         <Input
           id="inputLabel"
           type="text"
+          onChange={e => {
+            props.addTypingUser(props.uid);
+          }}
           onKeyPress={e => {
             if (e.key === 'Enter') {
               props.addMessage(input.value, props.username);
+              props.removeTypingUser(props.uid);
               input.value = '';
             }
           }}
@@ -59,6 +60,8 @@ EnhancedInput.propTypes = {
 
 const mapDispatchToProps = {
   addMessage,
+  addTypingUser,
+  removeTypingUser,
 };
 
 export default connect(null, mapDispatchToProps)(withStyles(styles)(EnhancedInput));

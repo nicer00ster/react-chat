@@ -158,6 +158,7 @@ module.exports = (app) => {
             success: true,
             message: 'Successfully verified.',
             user: sessions[0].username,
+            id: sessions[0].uid,
           })
         });
       }

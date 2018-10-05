@@ -14,6 +14,8 @@ import {
   focusedUser,
   populateUsersList,
   addUser,
+  addTypingUser,
+  removeTypingUser,
 } from './actions';
 
 class Root extends React.Component {
@@ -48,6 +50,8 @@ const mapDispatchToProps = {
   focusedUser,
   populateUsersList,
   addUser,
+  addTypingUser,
+  removeTypingUser,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Root);

@@ -13,7 +13,7 @@ import rootSaga from './sagas';
 import Root from './Root';
 import io from 'socket.io-client';
 
-const connectSocket = io.connect('http://localhost:8080');
+const connectSocket = io.connect('http://10.0.40.58:8080');
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -29,8 +29,6 @@ const parsed = JSON.parse(storage);
 const username = parsed.username;
 const uid = parsed.token;
 
-
-// sagaMiddleware.run(rootSaga, { socket, username, uid });
 sagaMiddleware.run(rootSaga, { socket, dispatch: store.dispatch });
 
 const theme = createMuiTheme({

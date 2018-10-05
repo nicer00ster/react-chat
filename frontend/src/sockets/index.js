@@ -1,6 +1,6 @@
 import * as types from '../constants';
 const io = require('socket.io-client');
-import { messageReceived, populateUsersList, addUser } from '../actions';
+import { messageReceived, populateUsersList, addUser, addTypingUser } from '../actions';
 
 const setupSocket = (dispatch, socket) => {
 
@@ -8,10 +8,13 @@ const setupSocket = (dispatch, socket) => {
     console.log('hererererrrere, da', data);
     switch(data.type) {
       case types.ADD_USER:
-        dispatch(addUser(data));
+        console.log('hahahahahahaha', data.user);
+        // dispatch(addUser(data));
+        dispatch(addUser(data.user));
         break;
-      case types.REMOVE_USER:
-        // dispatch(removeUser(data));
+      case types.ACTIVE_USERS:
+        console.log('heehehehehehehehehehehehe', data);
+        dispatch(populateUsersList(data));
         break;
       default:
         break;
@@ -28,28 +31,20 @@ const setupSocket = (dispatch, socket) => {
         break;
     }
   });
-  // socket.onopen = () => {
-  //   socket.send(JSON.stringify({
-  //     type: types.ADD_USER,
-  //     name: username,
-  //     uid,
-  //   }))
-  // }
-  //
-  // socket.onmessage = (event) => {
-  //   const data = JSON.parse(event.data);
-  //   console.log('onmessage', data);
-  //   switch (data.type) {
-  //     case types.ADD_MESSAGE:
-  //       dispatch(messageReceived(data.message, data.sender))
-  //       break;
-  //     case types.ACTIVE_USERS:
-  //       dispatch(populateUsersList(data.users))
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // }
+
+  socket.on('typing', data => {
+    console.log('sockietheretyping', data);
+    switch(data.type) {
+      case types.ADD_TYPING_USER:
+        dispatch(addTypingUser(data.payload));
+        break;
+      case types.REMOVE_TYPING_USER:
+        dispatch(removeTypingUser(data.payload));
+        break;
+      default:
+        break;
+    }
+  })
 
   return socket;
 }
