@@ -63,17 +63,16 @@ io.on('connection', function(socket) {
 
   socket.on('typing', function(data) {
     console.log('user is typing: ', data);
-    socket.broadcast.emit('typing', data);
-      // switch(data.type) {
-      //   case 'ADD_TYPING_USER':
-      //     socket.broadcast.emit('typing', data);
-      //     break;
-      //   case 'REMOVE_TYPING_USER':
-      //     socket.broadcast.emit('typing', data);
-      //     break;
-      //   default:
-      //   break;
-      // }
+      switch(data.type) {
+        case 'ADD_TYPING_USER':
+          socket.broadcast.emit('is typing', { type: 'ADD_TYPING_USER', payload: data.payload });
+          break;
+        case 'REMOVE_TYPING_USER':
+          socket.broadcast.emit('is typing', { type: 'REMOVE_TYPING_USER', payload: data.payload });
+          break;
+        default:
+        break;
+      }
   });
 
   socket.on('disconnect', function() {

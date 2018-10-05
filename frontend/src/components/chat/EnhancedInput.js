@@ -24,7 +24,13 @@ function EnhancedInput(props) {
           id="inputLabel"
           type="text"
           onChange={e => {
-            props.addTypingUser(props.uid);
+            const isInputEmpty = input.value.length === 0;
+            if(!isInputEmpty) {
+              props.addTypingUser(props.uid);
+            } else {
+              props.removeTypingUser(props.uid);
+            }
+            console.log(isInputEmpty);
           }}
           onKeyPress={e => {
             if (e.key === 'Enter') {
@@ -56,6 +62,8 @@ function EnhancedInput(props) {
 EnhancedInput.propTypes = {
   addMessage: PropTypes.func,
   classes: PropTypes.object,
+  addTypingUser: PropTypes.func,
+  removeTypingUser: PropTypes.func,
 };
 
 const mapDispatchToProps = {

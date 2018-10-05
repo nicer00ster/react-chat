@@ -1,6 +1,6 @@
 import * as types from '../constants';
 const io = require('socket.io-client');
-import { messageReceived, populateUsersList, addUser, addTypingUser } from '../actions';
+import { messageReceived, populateUsersList, addUser, addTypingUser, removeTypingUser } from '../actions';
 
 const setupSocket = (dispatch, socket) => {
 
@@ -9,7 +9,6 @@ const setupSocket = (dispatch, socket) => {
     switch(data.type) {
       case types.ADD_USER:
         console.log('hahahahahahaha', data.user);
-        // dispatch(addUser(data));
         dispatch(addUser(data.user));
         break;
       case types.ACTIVE_USERS:
@@ -32,7 +31,7 @@ const setupSocket = (dispatch, socket) => {
     }
   });
 
-  socket.on('typing', data => {
+  socket.on('is typing', data => {
     console.log('sockietheretyping', data);
     switch(data.type) {
       case types.ADD_TYPING_USER:
