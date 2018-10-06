@@ -31,6 +31,7 @@ let users = [];
 
 io.on('connection', function(socket) {
   console.log('User connected: ', socket.id);
+  socket.join('main');
 
   socket.on('message', function(data) {
     console.log('incoming message from: ', data.sender, ' ', data.message);
@@ -61,18 +62,24 @@ io.on('connection', function(socket) {
     }
   })
 
-  socket.on('typing', function(data) {
+  socket.on('is typing', function(data) {
     console.log('user is typing: ', data);
-      switch(data.type) {
-        case 'ADD_TYPING_USER':
-          socket.broadcast.emit('is typing', { type: 'ADD_TYPING_USER', payload: data.payload });
-          break;
-        case 'REMOVE_TYPING_USER':
-          socket.broadcast.emit('is typing', { type: 'REMOVE_TYPING_USER', payload: data.payload });
-          break;
-        default:
-        break;
-      }
+    socket.emit('is typing', data);
+      // switch(data.type) {
+      //   case 'ADD_TYPING_USER':
+      //     socket.broadcast.emit('is typing', { type: 'ADD_TYPING_USER', payload: data.payload });
+      //     break;
+      //   case 'REMOVE_TYPING_USER':
+      //     socket.broadcast.emit('is typing', { type: 'REMOVE_TYPING_USER', payload: data.payload });
+      //     break;
+      //   default:
+      //   break;
+      // }
+  });
+
+  socket.on('stopped typing', function(data) {
+    console.log('user stopped typing: ', data);
+    socket.emit('stopped typing', data);
   });
 
   socket.on('disconnect', function() {

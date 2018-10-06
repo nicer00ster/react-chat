@@ -11,9 +11,7 @@ import setupSocket from './sockets';
 import rootReducer from './reducers';
 import rootSaga from './sagas';
 import Root from './Root';
-import io from 'socket.io-client';
-
-const connectSocket = io.connect('http://localhost:8080');
+import { connectSocket } from '../../config';
 
 const sagaMiddleware = createSagaMiddleware();
 

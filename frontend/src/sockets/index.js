@@ -33,16 +33,12 @@ const setupSocket = (dispatch, socket) => {
 
   socket.on('is typing', data => {
     console.log('sockietheretyping', data);
-    switch(data.type) {
-      case types.ADD_TYPING_USER:
-        dispatch(addTypingUser(data.payload));
-        break;
-      case types.REMOVE_TYPING_USER:
-        dispatch(removeTypingUser(data.payload));
-        break;
-      default:
-        break;
-    }
+    dispatch(addTypingUser(data));
+  });
+
+  socket.on('stopped typing', data => {
+    console.log('sockiestoppedtyping', data);
+    dispatch(removeTypingUser(data));
   })
 
   return socket;
