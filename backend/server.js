@@ -64,7 +64,8 @@ io.on('connection', function(socket) {
 
   socket.on('is typing', function(data) {
     console.log('user is typing: ', data);
-    socket.emit('is typing', data);
+    socket.broadcast.emit('is typing', data);
+    // io.emit('is typing', data);
       // switch(data.type) {
       //   case 'ADD_TYPING_USER':
       //     socket.broadcast.emit('is typing', { type: 'ADD_TYPING_USER', payload: data.payload });
@@ -79,7 +80,8 @@ io.on('connection', function(socket) {
 
   socket.on('stopped typing', function(data) {
     console.log('user stopped typing: ', data);
-    socket.emit('stopped typing', data);
+    socket.broadcast.emit('stopped typing', data);
+    // io.emit('stopped typing', data);
   });
 
   socket.on('disconnect', function() {

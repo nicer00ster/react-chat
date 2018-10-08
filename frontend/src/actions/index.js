@@ -115,7 +115,6 @@ export function addTypingUser(uid) {
    return {
      type: types.ADD_TYPING_USER,
      payload: uid,
-     isTyping: true,
    };
  }
  export function removeTypingUser(uid) {
@@ -123,6 +122,5 @@ export function addTypingUser(uid) {
    return {
      type: types.REMOVE_TYPING_USER,
      payload: uid,
-     isTyping: false,
    };
  }

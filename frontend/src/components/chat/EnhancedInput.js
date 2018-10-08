@@ -23,16 +23,16 @@ function EnhancedInput(props) {
         <Input
           id="inputLabel"
           type="text"
-          onChange={e => {
-            const isInputEmpty = input.value.length === 0;
-            if(!isInputEmpty) {
-              props.addTypingUser(props.uid);
-            } else {
-              props.removeTypingUser(props.uid);
-            }
-            console.log(isInputEmpty);
-          }}
+          // onChange={e => {
+          //   const isInputEmpty = input.value.length === 0;
+          //   if(!isInputEmpty) {
+          //     props.addTypingUser(props.uid);
+          //   } else {
+          //     props.removeTypingUser(props.uid);
+          //   }
+          // }}
           onKeyPress={e => {
+            props.addTypingUser(props.uid);
             if (e.key === 'Enter') {
               props.addMessage(input.value, props.username);
               props.removeTypingUser(props.uid);
