@@ -75,12 +75,23 @@ export function fetchUsers() {
 let nextMessageId = 0;
 let nextUserId = 0;
 
-export function addMessage(message, sender) {
+export function addMessage(message, channel, sender) {
   console.log(message, sender);
   return {
     type: types.ADD_MESSAGE,
     id: nextMessageId++,
     message,
+    channel,
+    sender,
+  };
+}
+
+export function messageReceived(message, channel, sender) {
+  return {
+    type: types.MESSAGE_RECEIVED,
+    id: nextMessageId++,
+    message,
+    channel,
     sender,
   };
 }
@@ -91,15 +102,6 @@ export function addUser(name) {
     type: types.ADD_USER,
     id: nextUserId++,
     name,
-  };
-}
-
-export function messageReceived(message, sender) {
-  return {
-    type: types.MESSAGE_RECEIVED,
-    id: nextMessageId++,
-    message,
-    sender,
   };
 }
 
@@ -117,10 +119,24 @@ export function addTypingUser(uid) {
      payload: uid,
    };
  }
+
  export function removeTypingUser(uid) {
    console.log('removeTypingUser', uid);
    return {
      type: types.REMOVE_TYPING_USER,
      payload: uid,
+   };
+ }
+
+ export function fetchChannels() {
+   return {
+     type: types.FETCH_CHANNELS,
+   };
+ }
+
+ export function changeChannel(channel) {
+   return {
+     type: types.CHANGE_CHANNEL,
+     channel,
    };
  }

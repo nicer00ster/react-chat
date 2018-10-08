@@ -31,13 +31,23 @@ let users = [];
 
 io.on('connection', function(socket) {
   console.log('User connected: ', socket.id);
-  socket.join('main');
+  socket.join('lobby');
+
+  socket.on('change channel', function(data) {
+    console.log('change channel server', data);
+    socket.join(data.channel);
+  });
+
+  socket.on('leave channel', function(channel) {
+    socket.leave(channel);
+  });
 
   socket.on('message', function(data) {
-    console.log('incoming message from: ', data.sender, ' ', data.message);
+    console.log('incoming message from: ', data.sender, ' ', data.message, ' in channel ', data.channel);
     switch(data.type) {
       case 'ADD_MESSAGE':
-        socket.broadcast.emit('message', data);
+        // socket.broadcast.emit('message', data);
+        socket.broadcast.to(data.channel).emit('message', data.message)
         break;
       default:
         break;
@@ -62,9 +72,17 @@ io.on('connection', function(socket) {
     }
   })
 
+  // socket.on('typing', function (data) {
+  //   socket.broadcast.to(data.channel).emit('typing bc', data.user);
+  // });
+  //
+  // socket.on('stop typing', function (data) {
+  //   socket.broadcast.to(data.channel).emit('stop typing bc', data.user);
+  // });
+
   socket.on('is typing', function(data) {
     console.log('user is typing: ', data);
-    socket.broadcast.emit('is typing', data);
+    io.to('lobby').emit('is typing', data);
     // io.emit('is typing', data);
       // switch(data.type) {
       //   case 'ADD_TYPING_USER':
@@ -80,7 +98,7 @@ io.on('connection', function(socket) {
 
   socket.on('stopped typing', function(data) {
     console.log('user stopped typing: ', data);
-    socket.broadcast.emit('stopped typing', data);
+    io.to('lobby').emit('stopped typing', data);
     // io.emit('stopped typing', data);
   });
 

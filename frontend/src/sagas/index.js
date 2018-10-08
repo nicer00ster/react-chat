@@ -70,6 +70,25 @@ function apiFetchUsers() {
   .then(users => users);
 }
 
+function apiCreateChannel(data) {
+  return axios({
+    method: 'post',
+    url: '/api/channels/new_channel',
+    data: {
+      name: data.name,
+      private: false,
+    }
+  })
+}
+
+function apiFetchChannels() {
+  return axios({
+    method: 'get',
+    url: '/api/channels',
+  })
+  .then(channels => channels);
+}
+
 function* loginSaga(data) {
   yield delay(2000);
   try {
@@ -114,6 +133,33 @@ function* registerSaga(data) {
   }
 }
 
+function* createChannelSaga(data) {
+  yield delay(1500);
+  try {
+    const response = yield call(apiCreateChannel, data);
+    const result = response.data;
+    if(result.success) {
+      yield put({ type: types.CREATE_CHANNEL_SUCCESS, result });
+    } else yield put({ type: types.CREATE_CHANNEL_FAILURE, error: result.message });
+  } catch (error) {
+    yield put({ type: types.CREATE_CHANNEL_FAILURE, error });
+  }
+}
+
+function* fetchChannelSaga(data) {
+  yield delay(1500);
+  try {
+    const response = yield call(apiFetchChannels, data);
+    const result = response.data;
+    console.log('saga channe;', result);
+    if(result.success) {
+      yield put({ type: types.FETCH_CHANNELS_SUCCESS, channels: result });
+    } else yield put({ type: types.FETCH_CHANNELS_SUCCESS, error: result.message });
+  } catch (error) {
+    yield put({ type: types.FETCH_CHANNELS_SUCCESS, error });
+  }
+}
+
 let username;
 function* verifyTokenSaga() {
   try {
@@ -139,22 +185,15 @@ function* fetchUsersSaga() {
 }
 
 function* isTyping(socket) {
-  // while (true) {
-  //   const { payload } = yield take(types.ADD_TYPING_USER);
-  //   console.log('add typing payload', payload);
-  //   socket.emit('is typing', payload);
-  // }
   const { payload } = yield take(types.ADD_TYPING_USER);
   console.log('saga typing here', payload);
   socket.emit('is typing', payload);
-  yield put({ type: types.ADD_TYPING_USER, payload });
 }
 
 function* stoppedTyping(socket) {
   const { payload } = yield take(types.REMOVE_TYPING_USER);
   console.log('remove typing payload', payload);
   socket.emit('stopped typing', payload);
-  yield put({ type: types.REMOVE_TYPING_USER, payload });
 }
 
 function* rootSaga(params) {
@@ -165,6 +204,8 @@ function* rootSaga(params) {
     takeEvery(types.LOGOUT, logoutSaga),
     takeEvery(types.VERIFIED, verifyTokenSaga),
     takeEvery(types.FETCH_USERS, fetchUsersSaga),
+    takeEvery(types.CREATE_CHANNEL, createChannelSaga),
+    takeEvery(types.FETCH_CHANNELS, fetchChannelSaga),
     takeEvery(types.ADD_USER, data => {
       console.log('saga', data);
       params.socket.emit('user', data);
@@ -176,28 +217,12 @@ function* rootSaga(params) {
     takeEvery(types.ADD_MESSAGE, data => {
       params.socket.emit('message', data);
     }),
+    takeEvery(types.CHANGE_CHANNEL, data => {
+      console.log('CHANGE_CHANNEL sagagaggaa', data);
+      params.socket.emit('change channel', data)
+    }),
     fork(isTyping, params.socket),
     fork(stoppedTyping, params.socket),
-    // takeLatest(types.ADD_TYPING_USER, data => {
-    //   console.log('sagatyping', data);
-    //   // if(data.payload) {
-    //     params.socket.emit('is typing', data)
-    //   // }
-    // }),
-    // takeLatest(types.REMOVE_TYPING_USER, data => {
-    //   console.log('saga remove typing', data);
-    //   // if(data.payload) {
-    //     params.socket.emit('stopped typing', data)
-    //   // }
-    // }),
-    // throttle(500, types.ADD_TYPING_USER, data => {
-    //   console.log('sagatyping', data);
-    //   params.socket.emit('is typing', data)
-    // }),
-    // throttle(500, types.REMOVE_TYPING_USER, data => {
-    //   console.log('saga remove typing', data);
-    //   params.socket.emit('is typing', data)
-    // }),
   ]);
 }
 

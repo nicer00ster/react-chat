@@ -31,15 +31,15 @@ function EnhancedInput(props) {
           //     props.removeTypingUser(props.uid);
           //   }
           // }}
+          inputRef={node => { input = node; }}
           onKeyPress={e => {
             props.addTypingUser(props.uid);
             if (e.key === 'Enter') {
-              props.addMessage(input.value, props.username);
+              props.addMessage(input.value, props.channel, props.username);
               props.removeTypingUser(props.uid);
               input.value = '';
             }
           }}
-          inputRef={node => { input = node; }}
           startAdornment={
             <InputAdornment position="start">
               <Message color="secondary" />
@@ -47,7 +47,7 @@ function EnhancedInput(props) {
           } />
         </FormControl>
         <Button
-          onClick={() => { props.addMessage(input.value, props.username); input.value = ''; }}
+          onClick={() => { props.addMessage(input.value, props.channel, props.username); input.value = ''; }}
           type="submit"
           variant="contained"
           color="primary"

@@ -16,6 +16,8 @@ import {
   addUser,
   addTypingUser,
   removeTypingUser,
+  fetchChannels,
+  changeChannel,
 } from './actions';
 
 class Root extends React.Component {
@@ -52,6 +54,8 @@ const mapDispatchToProps = {
   addUser,
   addTypingUser,
   removeTypingUser,
+  fetchChannels,
+  changeChannel,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Root);

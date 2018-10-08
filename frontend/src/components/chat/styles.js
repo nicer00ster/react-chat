@@ -1,4 +1,5 @@
 import lightBlue from '@material-ui/core/colors/lightBlue';
+import teal from '@material-ui/core/colors/teal';
 
 const drawerWidth = 240;
 
@@ -80,7 +81,6 @@ const styles = theme => ({
     height: '100%',
     overflowY: 'scroll',
     overflowX: 'hidden',
-    // border: '1px solid black',
   },
   toolbar: theme.mixins.toolbar,
   flex: {
@@ -122,6 +122,27 @@ const styles = theme => ({
   },
   rightIcon: {
     marginLeft: theme.spacing.unit,
+  },
+  buttonSuccess: {
+    backgroundColor: teal[500],
+    '&:hover': {
+      backgroundColor: teal[700],
+    },
+  },
+  fabProgress: {
+    color: teal[500],
+    position: 'absolute',
+    // top: -6,
+    // left: -6,
+    zIndex: 1,
+  },
+  buttonProgress: {
+    color: teal[500],
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    marginTop: -12,
+    marginLeft: -12,
   },
 });
 

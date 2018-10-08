@@ -5,7 +5,7 @@ import List from '@material-ui/core/List';
 import EnhancedMessage from './EnhancedMessage';
 import EnhancedUserTyping from './EnhancedUserTyping';
 
-const EnhancedMessageList = ({ messages, usersTyping }) => (
+const EnhancedMessageList = ({ messages, channel, usersTyping }) => (
   <List>
     {Object.values(messages).map(message => (
       <EnhancedMessage
@@ -16,8 +16,7 @@ const EnhancedMessageList = ({ messages, usersTyping }) => (
       ? Object.values(usersTyping).map(user => (
         <EnhancedUserTyping
           key={user._id}
-          {...user}
-        />
+          {...user} />
       ))
       : null
     }

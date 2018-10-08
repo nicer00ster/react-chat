@@ -13,6 +13,7 @@ class Chat extends React.Component {
   componentDidMount() {
     this.props.addUser(this.props.user.username);
     this.props.fetchUsers();
+    this.props.fetchChannels();
   }
   render() {
     const { classes } = this.props;
@@ -21,11 +22,14 @@ class Chat extends React.Component {
         <EnhancedAppBar
           logout={this.props.logout}
           chat={this.props.chat}
+          user={this.props.user}
           activeUsers={this.props.user.activeUsers}
+          changeChannel={this.props.changeChannel}
           focusedUser={this.props.focusedUser} />
         <EnhancedWrapper>
           <EnhancedInput
             uid={this.props.user.id}
+            channel={this.props.user.currentChannel}
             username={this.props.user.username} />
         </EnhancedWrapper>
       </React.Fragment>

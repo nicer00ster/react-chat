@@ -1,6 +1,6 @@
 import * as types from '../constants';
 const io = require('socket.io-client');
-import { messageReceived, populateUsersList, addUser, addTypingUser, removeTypingUser } from '../actions';
+import { messageReceived, populateUsersList, addUser, addTypingUser, removeTypingUser, changeChannel } from '../actions';
 
 const setupSocket = (dispatch, socket) => {
 
@@ -24,7 +24,7 @@ const setupSocket = (dispatch, socket) => {
     console.log('messagehere', data);
     switch(data.type) {
       case types.ADD_MESSAGE:
-        dispatch(messageReceived(data.message, data.sender));
+        dispatch(messageReceived(data.message, data.channel, data.sender));
         break;
       default:
         break;
@@ -39,7 +39,12 @@ const setupSocket = (dispatch, socket) => {
   socket.on('stopped typing', data => {
     console.log('sockiestoppedtyping', data);
     dispatch(removeTypingUser(data));
-  })
+  });
+
+  socket.on('change channel', data => {
+    console.log('sockie change channel', data);
+    dispatch(changeChannel(data.channel))
+  });
 
   return socket;
 }

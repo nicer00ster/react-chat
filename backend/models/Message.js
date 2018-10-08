@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-var messageSchema = mongoose.Schema({
+const messageSchema = mongoose.Schema({
   id: String,
   channelID: String,
   text: String,

@@ -5,7 +5,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 
 const EnhancedUserTyping = ({ username }) => (
-    <ListItem key={username.id}>
+    <ListItem key={username}>
       <Avatar alt={username} src={'http://i.pravatar.cc/150?img=3'} />
       <ListItemText secondary={`${username} is typing...`} />
     </ListItem>

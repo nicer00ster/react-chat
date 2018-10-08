@@ -1,5 +1,6 @@
 const Message = require('../../models/Message');
 const User = require('../../models/User');
+const Channel = require('../../models/Channel');
 const UserSession = require('../../models/UserSession');
 const bcrypt = require('bcrypt-nodejs');
 
@@ -199,6 +200,60 @@ module.exports = (app) => {
         });
       }
     })
+  });
+
+  // deprecating this route since it just gets all channels
+  app.get('/api/channels', function(req, res) {
+
+    Channel.find({},{ name: 1, id:1, _id:0 }, function(err, data) {
+      if(err) {
+        console.log(err);
+        return res.status(500).json({msg: 'internal server error'});
+      }
+
+      // res.json(data);
+      res.send({
+        success: true,
+        message: 'Successfully fetched all channels.',
+        data: data,
+      });
+    });
+  });
+
+  // this route returns all channels including private channels for that user
+  app.get('/api/channels/:name', function(req, res) {
+
+    Channel.find({ $or: [{ between: req.params.name }, { private: false }] }, {
+      name: 1,
+      id:1,
+      private: 1,
+      between: 1,
+      _id:0
+    }, function(err, data) {
+      if(err) {
+        console.log(err);
+        return res.status(500).json({msg: 'internal server error'});
+      }
+
+      res.json(data);
+    });
+  })
+
+  // post a new user to channel list db
+  app.post('/api/channels/new_channel', function(req, res) {
+    const channel = new Channel(req.body);
+    channel.save((err, data) => {
+      if(err) {
+        console.log(err);
+        return res.status(500).json({ msg: 'internal server error'});
+      }
+      console.log(data);
+      res.send({
+        success: true,
+        message: 'Created new channel.',
+        data: data,
+      })
+    });
   });
 
 };

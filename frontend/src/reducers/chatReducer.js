@@ -1,15 +1,4 @@
-import {
-  ADD_MESSAGE,
-  MESSAGE_RECEIVED,
-  SEND_MESSAGE,
-  SEND_MESSAGE_SUCCESS,
-  SEND_MESSAGE_FAILURE,
-  FETCH_MESSAGES,
-  FETCH_MESSAGES_SUCCESS,
-  FETCH_MESSAGES_FAILURE,
-  INPUT,
-  FOCUSED_USER,
-} from '../constants';
+import * as types from '../constants';
 
 const initialState = {
   message: '',
@@ -17,28 +6,34 @@ const initialState = {
   error: null,
   focusedUser: '',
   messages: [],
+  channels: [],
 };
 
 export default function authReducer(state = initialState, action = {}) {
   switch (action.type) {
-    case SEND_MESSAGE:
+    case types.SEND_MESSAGE:
     console.log(action);
       return {
         ...state,
         sending: true,
       };
-    case SEND_MESSAGE_SUCCESS:
+    case types.SEND_MESSAGE_SUCCESS:
     console.log('SEND_MESSAGE_SUCCESS', action);
       return {
         ...state,
         sending: false,
         message: action.message,
       };
-    case SEND_MESSAGE_FAILURE:
+    case types.SEND_MESSAGE_FAILURE:
       return {
         ...state,
         sending: false,
         error: action.error,
+      };
+    case types.INPUT:
+      return {
+        ...state,
+        message: action.message,
       };
     // case FETCH_MESSAGES:
     //   return {
@@ -58,13 +53,13 @@ export default function authReducer(state = initialState, action = {}) {
     //     messages: {},
     //     error: action.error,
     //   };
-    case FOCUSED_USER:
+    case types.FOCUSED_USER:
       return {
         ...state,
         focusedUser: action.user,
       };
-    case ADD_MESSAGE:
-    case MESSAGE_RECEIVED:
+    case types.ADD_MESSAGE:
+    case types.MESSAGE_RECEIVED:
     console.log('ADD_MESSAGE', action);
       return {
         ...state,
@@ -72,10 +67,29 @@ export default function authReducer(state = initialState, action = {}) {
           {
             message: action.message,
             sender: action.sender,
+            channel: action.channel,
             id: action.id,
           },
         ]),
       };
+    case types.FETCH_CHANNELS:
+      return {
+        ...state,
+        fetching: true,
+      }
+    case types.FETCH_CHANNELS_SUCCESS:
+    console.log('fetch-chanels succes', action.channels.data);
+      return {
+        ...state,
+        fetching: false,
+        channels: action.channels.data,
+      }
+    case types.FETCH_CHANNELS_FAILURE:
+      return {
+        ...state,
+        fetching: false,
+        error: action,
+      }
     default:
       return state;
   }
