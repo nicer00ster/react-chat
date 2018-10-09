@@ -31,28 +31,29 @@ export default function authReducer(state = initialState, action = {}) {
         error: action.error,
       };
     case types.INPUT:
+    console.log('INPUT', action);
       return {
         ...state,
-        message: action.message,
+        message: action.input,
       };
-    // case FETCH_MESSAGES:
-    //   return {
-    //     ...state,
-    //     fetching: true,
-    //   };
-    // case FETCH_MESSAGES_SUCCESS:
-    //   return {
-    //     ...state,
-    //     fetching: false,
-    //     messages: action.messages,
-    //   };
-    // case FETCH_MESSAGES_FAILURE:
-    //   return {
-    //     ...state,
-    //     fetching: false,
-    //     messages: {},
-    //     error: action.error,
-    //   };
+    case types.FETCH_MESSAGES:
+      return {
+        ...state,
+        fetching: true,
+      };
+    case types.FETCH_MESSAGES_SUCCESS:
+      return {
+        ...state,
+        fetching: false,
+        messages: action.messages.data,
+      };
+    case types.FETCH_MESSAGES_FAILURE:
+      return {
+        ...state,
+        fetching: false,
+        messages: {},
+        error: action.error,
+      };
     case types.FOCUSED_USER:
       return {
         ...state,
@@ -63,12 +64,13 @@ export default function authReducer(state = initialState, action = {}) {
     console.log('ADD_MESSAGE', action);
       return {
         ...state,
+        message: '',
         messages: state.messages.concat([
           {
             message: action.message,
             sender: action.sender,
             channel: action.channel,
-            id: action.id,
+            _id: action.id,
           },
         ]),
       };

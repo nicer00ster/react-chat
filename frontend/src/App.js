@@ -3,6 +3,7 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import multi from 'redux-multi';
 import pink from '@material-ui/core/colors/pink';
 import teal from '@material-ui/core/colors/teal';
 import createSagaMiddleware from 'redux-saga';
@@ -17,15 +18,10 @@ const sagaMiddleware = createSagaMiddleware();
 
 const store = createStore(rootReducer,
   composeWithDevTools(
-    applyMiddleware(sagaMiddleware),
+    applyMiddleware(sagaMiddleware, multi),
   ));
 
 const socket = setupSocket(store.dispatch, connectSocket);
-
-// const storage = localStorage.getItem('app');
-// const parsed = JSON.parse(storage);
-// const username = parsed.username;
-// const uid = parsed.token;
 
 sagaMiddleware.run(rootSaga, { socket, dispatch: store.dispatch });
 

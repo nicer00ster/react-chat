@@ -73,12 +73,25 @@ function apiFetchUsers() {
 function apiCreateChannel(data) {
   return axios({
     method: 'post',
-    url: '/api/channels/new_channel',
+    url: '/api/channels/new',
     data: {
       name: data.name,
       private: false,
     }
-  })
+  });
+}
+
+function apiNewMessage(data) {
+  console.log('apiNewMessage', data);
+  return axios({
+    method: 'post',
+    url: '/api/messages/new',
+    data: {
+      user: data.sender,
+      message: data.message,
+      channel: data.channel,
+    }
+  });
 }
 
 function apiFetchChannels() {
@@ -87,6 +100,14 @@ function apiFetchChannels() {
     url: '/api/channels',
   })
   .then(channels => channels);
+}
+
+function apiFetchMessages() {
+  return axios({
+    method: 'get',
+    url: '/api/messages',
+  })
+  .then(messages => messages);
 }
 
 function* loginSaga(data) {
@@ -146,6 +167,32 @@ function* createChannelSaga(data) {
   }
 }
 
+function* newMessageSaga(data) {
+  try {
+    const response = yield call(apiNewMessage, data);
+    const result = response.data;
+    if(result.success) {
+      yield put({ type: types.SEND_MESSAGE_SUCCESS, result });
+    } else put({ type: types.SEND_MESSAGE_FAILURE, error: result.message });
+  } catch (error) {
+    yield put({ type: types.SEND_MESSAGE_FAILURE, error });
+  }
+}
+
+function* fetchMessagesSaga(data) {
+  yield delay(1500);
+  try {
+    const response = yield call(apiFetchMessages, data);
+    const result = response.data;
+    console.log('saga messages fetchng;', result);
+    if(result.success) {
+      yield put({ type: types.FETCH_MESSAGES_SUCCESS, messages: result });
+    } else yield put({ type: types.FETCH_MESSAGES_FAILURE, error: result.message });
+  } catch (error) {
+    yield put({ type: types.FETCH_MESSAGES_FAILURE, error });
+  }
+}
+
 function* fetchChannelSaga(data) {
   yield delay(1500);
   try {
@@ -154,19 +201,17 @@ function* fetchChannelSaga(data) {
     console.log('saga channe;', result);
     if(result.success) {
       yield put({ type: types.FETCH_CHANNELS_SUCCESS, channels: result });
-    } else yield put({ type: types.FETCH_CHANNELS_SUCCESS, error: result.message });
+    } else yield put({ type: types.FETCH_CHANNELS_FAILURE, error: result.message });
   } catch (error) {
-    yield put({ type: types.FETCH_CHANNELS_SUCCESS, error });
+    yield put({ type: types.FETCH_CHANNELS_FAILURE, error });
   }
 }
 
-let username;
 function* verifyTokenSaga() {
   try {
     const response = yield call(apiVerify);
     console.log('verifyTokenSaga', response);
     if (response.data.success) {
-      username = response.data.user;
       yield put({ type: types.VERIFIED_SUCCESS, data: response.data });
     } else yield put({ type: types.VERIFIED_FAILURE, data: response.data });
   } catch (error) {
@@ -206,6 +251,11 @@ function* rootSaga(params) {
     takeEvery(types.FETCH_USERS, fetchUsersSaga),
     takeEvery(types.CREATE_CHANNEL, createChannelSaga),
     takeEvery(types.FETCH_CHANNELS, fetchChannelSaga),
+    takeEvery(types.FETCH_MESSAGES, fetchMessagesSaga),
+    takeEvery(types.SEND_MESSAGE, newMessageSaga),
+    takeEvery(types.ADD_MESSAGE, data => {
+      params.socket.emit('message', data);
+    }),
     takeEvery(types.ADD_USER, data => {
       console.log('saga', data);
       params.socket.emit('user', data);
@@ -214,11 +264,7 @@ function* rootSaga(params) {
       console.log('active users saga', data);
       params.socket.emit('user', data);
     }),
-    takeEvery(types.ADD_MESSAGE, data => {
-      params.socket.emit('message', data);
-    }),
     takeEvery(types.CHANGE_CHANNEL, data => {
-      console.log('CHANGE_CHANNEL sagagaggaa', data);
       params.socket.emit('change channel', data)
     }),
     fork(isTyping, params.socket),

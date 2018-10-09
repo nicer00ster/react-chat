@@ -6,7 +6,7 @@ const drawerWidth = 240;
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    height: 440,
+    height: 640,
     zIndex: 1,
     overflow: 'hidden',
     position: 'relative',
@@ -143,6 +143,11 @@ const styles = theme => ({
     left: '50%',
     marginTop: -12,
     marginLeft: -12,
+  },
+  roomTitle: {
+    textTransform: 'uppercase',
+    fontWeight: 'bold',
+    margin: 12,
   },
 });
 

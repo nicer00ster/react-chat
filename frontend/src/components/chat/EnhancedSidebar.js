@@ -32,7 +32,7 @@ const EnhancedSidebar = props => (
     <Typography align="center" variant="caption">
       OFFLINE
     </Typography>
-    {/* {Object.values(props.users).map(user => (
+    {Object.values(props.offlineUsers).map(user => (
       !user.isActive
       ? <ListItem
           onClick={e => props.focusedUser(e.target.textContent)}
@@ -47,7 +47,7 @@ const EnhancedSidebar = props => (
           <ListItemText primary={user.username} />
         </ListItem>
       : null
-    ))} */}
+    ))}
   </List>
 );
 
@@ -66,4 +66,5 @@ EnhancedSidebar.propTypes = {
 
 export default connect(state => ({
   users: state.user.users,
+  offlineUsers: state.user.offlineUsers,
 }), {})(EnhancedSidebar);

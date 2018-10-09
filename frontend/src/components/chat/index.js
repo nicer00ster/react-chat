@@ -14,6 +14,7 @@ class Chat extends React.Component {
     this.props.addUser(this.props.user.username);
     this.props.fetchUsers();
     this.props.fetchChannels();
+    this.props.fetchMessages();
   }
   render() {
     const { classes } = this.props;
@@ -28,6 +29,8 @@ class Chat extends React.Component {
           focusedUser={this.props.focusedUser} />
         <EnhancedWrapper>
           <EnhancedInput
+            message={this.props.chat.message}
+            handleInput={this.props.handleInput}
             uid={this.props.user.id}
             channel={this.props.user.currentChannel}
             username={this.props.user.username} />

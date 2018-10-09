@@ -14,7 +14,6 @@ import { addMessage, addTypingUser, removeTypingUser } from '../../actions';
 import styles from './styles';
 
 function EnhancedInput(props) {
-  let input;
   const { classes } = props;
   return (
     <section className="chat__message" id="new-message">
@@ -23,21 +22,13 @@ function EnhancedInput(props) {
         <Input
           id="inputLabel"
           type="text"
-          // onChange={e => {
-          //   const isInputEmpty = input.value.length === 0;
-          //   if(!isInputEmpty) {
-          //     props.addTypingUser(props.uid);
-          //   } else {
-          //     props.removeTypingUser(props.uid);
-          //   }
-          // }}
-          inputRef={node => { input = node; }}
+          onChange={e => props.handleInput(e.target.value, props.channel)}
+          value={props.message}
           onKeyPress={e => {
             props.addTypingUser(props.uid);
             if (e.key === 'Enter') {
-              props.addMessage(input.value, props.channel, props.username);
+              props.addMessage(props.message, props.channel, props.username);
               props.removeTypingUser(props.uid);
-              input.value = '';
             }
           }}
           startAdornment={
@@ -47,7 +38,7 @@ function EnhancedInput(props) {
           } />
         </FormControl>
         <Button
-          onClick={() => { props.addMessage(input.value, props.channel, props.username); input.value = ''; }}
+          onClick={() => props.addMessage(props.message, props.channel, props.username)}
           type="submit"
           variant="contained"
           color="primary"

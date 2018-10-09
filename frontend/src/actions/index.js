@@ -43,14 +43,14 @@ export function logout(user) {
 }
 
 // Chat Actions
-export function sendMessage(message, to, user) {
-  return {
-    type: types.SEND_MESSAGE,
-    message,
-    to,
-    user,
-  };
-}
+// export function sendMessage(message, to, user) {
+//   return {
+//     type: types.SEND_MESSAGE,
+//     message,
+//     to,
+//     user,
+//   };
+// }
 
 export function focusedUser(user) {
   return {
@@ -71,25 +71,42 @@ export function fetchUsers() {
   };
 }
 
+export function fetchChannels() {
+  return {
+    type: types.FETCH_CHANNELS,
+  };
+}
+
+export function fetchMessages() {
+  return {
+    type: types.FETCH_MESSAGES,
+  };
+}
 // Chat Actions
 let nextMessageId = 0;
 let nextUserId = 0;
 
 export function addMessage(message, channel, sender) {
   console.log(message, sender);
-  return {
+  return [{
     type: types.ADD_MESSAGE,
-    id: nextMessageId++,
+    _id: nextMessageId++,
     message,
     channel,
     sender,
-  };
+  }, {
+    type: types.SEND_MESSAGE,
+    _id: nextMessageId++,
+    message,
+    channel,
+    sender,
+  }];
 }
 
 export function messageReceived(message, channel, sender) {
   return {
     type: types.MESSAGE_RECEIVED,
-    id: nextMessageId++,
+    _id: nextMessageId++,
     message,
     channel,
     sender,
@@ -125,12 +142,6 @@ export function addTypingUser(uid) {
    return {
      type: types.REMOVE_TYPING_USER,
      payload: uid,
-   };
- }
-
- export function fetchChannels() {
-   return {
-     type: types.FETCH_CHANNELS,
    };
  }
 

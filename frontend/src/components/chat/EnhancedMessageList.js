@@ -8,9 +8,11 @@ import EnhancedUserTyping from './EnhancedUserTyping';
 const EnhancedMessageList = ({ messages, channel, usersTyping }) => (
   <List>
     {Object.values(messages).map(message => (
-      <EnhancedMessage
-        key={message.id}
-        {...message} />
+      channel === message.channel
+      ? <EnhancedMessage
+          key={message._id}
+          {...message} />
+      : null
     ))}
     {usersTyping.length > 0
       ? Object.values(usersTyping).map(user => (
@@ -26,9 +28,7 @@ const EnhancedMessageList = ({ messages, channel, usersTyping }) => (
 EnhancedMessageList.propTypes = {
   messages: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired,
       message: PropTypes.string.isRequired,
-      sender: PropTypes.string.isRequired,
     }).isRequired,
   ).isRequired,
 };
@@ -36,4 +36,5 @@ EnhancedMessageList.propTypes = {
 export default connect(state => ({
   messages: state.chat.messages,
   usersTyping: state.user.usersTyping,
+  channel: state.user.currentChannel,
 }), {})(EnhancedMessageList);

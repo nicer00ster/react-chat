@@ -203,7 +203,7 @@ module.exports = (app) => {
   });
 
   // deprecating this route since it just gets all channels
-  app.get('/api/channels', function(req, res) {
+  app.get('/api/channels', (req, res) => {
 
     Channel.find({},{ name: 1, id:1, _id:0 }, function(err, data) {
       if(err) {
@@ -221,7 +221,7 @@ module.exports = (app) => {
   });
 
   // this route returns all channels including private channels for that user
-  app.get('/api/channels/:name', function(req, res) {
+  app.get('/api/channels/:name', (req, res) => {
 
     Channel.find({ $or: [{ between: req.params.name }, { private: false }] }, {
       name: 1,
@@ -229,7 +229,7 @@ module.exports = (app) => {
       private: 1,
       between: 1,
       _id:0
-    }, function(err, data) {
+    }, (err, data) => {
       if(err) {
         console.log(err);
         return res.status(500).json({msg: 'internal server error'});
@@ -240,7 +240,7 @@ module.exports = (app) => {
   })
 
   // post a new user to channel list db
-  app.post('/api/channels/new_channel', function(req, res) {
+  app.post('/api/channels/new', (req, res) => {
     const channel = new Channel(req.body);
     channel.save((err, data) => {
       if(err) {
@@ -255,5 +255,62 @@ module.exports = (app) => {
       })
     });
   });
+
+  // query DB for ALL messages
+ app.get('/api/messages', (req, res) => {
+   Message.find({}, {
+     id: 1,
+     channel: 1,
+     message: 1,
+     user: 1,
+     timestamp: 1,
+     _id: 1,
+   }, (err, data) => {
+     console.log('fetching messages here', data);
+     if(err) {
+       console.log(err);
+       return res.status(500).json({ message: 'internal server error' });
+     }
+     res.send({
+       success: true,
+       message: 'Successfully fetched messages.',
+       data: data,
+     });
+   });
+ });
+
+ app.get('/api/messages/:channel', (req, res) => {
+   Message.find({ channelID: req.params.channel }, {
+     id: 1,
+     channelID: 1,
+     text: 1,
+     user: 1,
+     time: 1,
+     _id: 0
+   }, (err, data) => {
+     if(err) {
+       console.log(err);
+       return res.status(500).json({ message: 'internal server error' });
+     }
+     res.json(data);
+   });
+ })
+
+ //post a new message to db
+ app.post('/api/messages/new', function(req, res) {
+   const message = new Message(req.body);
+   message.save((err, data) => {
+     if(err) {
+       console.log(err);
+       return res.status(500).json({ message: 'internal server error' });
+     }
+     console.log('new', data);
+     res.send({
+       success: true,
+       message: 'New message posted.',
+       data: data,
+     })
+   });
+ });
 
 };

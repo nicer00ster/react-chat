@@ -1727,7 +1727,7 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
-classnames@^2.2.5, classnames@^2.2.6:
+classnames@^2.2.3, classnames@^2.2.5, classnames@^2.2.6:
   version "2.2.6"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
 
@@ -4661,6 +4661,10 @@ loader-utils@^1.0.1, loader-utils@^1.0.2, loader-utils@^1.1.0:
     emojis-list "^2.0.0"
     json5 "^0.5.0"
 
+loaders.css@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/loaders.css/-/loaders.css-0.1.2.tgz#3a9fb43726c73334a38142af9d0629019b658743"
+
 locate-path@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/locate-path/-/locate-path-2.0.0.tgz#2b568b265eec944c6d9c0de9c3dbbbca0354cd8e"
@@ -6175,6 +6179,15 @@ react-router@^4.3.1:
     prop-types "^15.6.1"
     warning "^4.0.1"
 
+react-spinkit@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/react-spinkit/-/react-spinkit-3.0.0.tgz#31fdaf4e18177766c57d1b1f3330290f8492a85a"
+  dependencies:
+    classnames "^2.2.3"
+    loaders.css "^0.1.2"
+    object-assign "^4.1.0"
+    prop-types "^15.5.8"
+
 react-tap-event-plugin@^3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/react-tap-event-plugin/-/react-tap-event-plugin-3.0.3.tgz#bc5fd0ee3fd3ab5224c1c2ff6f0750204ae89802"
@@ -6305,6 +6318,10 @@ redent@^1.0.0:
 redux-devtools-extension@^2.13.5:
   version "2.13.5"
   resolved "https://registry.yarnpkg.com/redux-devtools-extension/-/redux-devtools-extension-2.13.5.tgz#3ff34f7227acfeef3964194f5f7fc2765e5c5a39"
+
+redux-multi@^0.1.12:
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/redux-multi/-/redux-multi-0.1.12.tgz#28e1fe5e49672cbc5bd8a07f0b2aeaf0ef8355c2"
 
 redux-saga@^0.16.0:
   version "0.16.0"

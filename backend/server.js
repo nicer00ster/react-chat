@@ -46,8 +46,8 @@ io.on('connection', function(socket) {
     console.log('incoming message from: ', data.sender, ' ', data.message, ' in channel ', data.channel);
     switch(data.type) {
       case 'ADD_MESSAGE':
-        // socket.broadcast.emit('message', data);
-        socket.broadcast.to(data.channel).emit('message', data.message)
+        socket.broadcast.emit('message', data);
+        // socket.broadcast.to(data.channel).emit('message', data.message)
         break;
       default:
         break;

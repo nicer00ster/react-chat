@@ -17,6 +17,7 @@ import {
   addTypingUser,
   removeTypingUser,
   fetchChannels,
+  fetchMessages,
   changeChannel,
 } from './actions';
 
@@ -55,6 +56,7 @@ const mapDispatchToProps = {
   addTypingUser,
   removeTypingUser,
   fetchChannels,
+  fetchMessages,
   changeChannel,
 };
 

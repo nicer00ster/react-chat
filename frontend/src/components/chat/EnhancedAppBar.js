@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { withStyles } from '@material-ui/core/styles';
+import Spinner from 'react-spinkit';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -14,6 +14,7 @@ import Code from '@material-ui/icons/Code';
 import FastFood from '@material-ui/icons/FastFood';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
+import { withStyles } from '@material-ui/core/styles';
 
 import EnhancedSidebar from './EnhancedSidebar';
 import EnhancedMessageList from './EnhancedMessageList';
@@ -98,7 +99,14 @@ function EnhancedAppBar(props) {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <EnhancedMessageList channel={props.user.currentChannel} />
+        <Typography
+          align="center"
+          className={classNames('slide-in-blurred-left', classes.roomTitle)}
+          variant="headline">{props.user.currentChannel}</Typography>
+          <Divider />
+          {props.chat.fetching
+          ? <div className="loading"><Spinner color="pink" fadeIn="quarter" name="double-bounce" /></div>
+          : <EnhancedMessageList />}
       </main>
     </div>
   );
