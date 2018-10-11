@@ -10,7 +10,7 @@ const prod = NODE_ENV === 'production';
 
 module.exports = {
   entry: {
-    app: [help.root('frontend/src/index.js')],
+    app: ['babel-polyfill', help.root('frontend/src/index.js')],
   },
   output: {
     path: help.root('dist'),
@@ -44,8 +44,8 @@ module.exports = {
 
     new webpack.DefinePlugin({
       'process.env': {
-        // NODE_ENV: JSON.stringify('production'), // Uncomment for production
-        NODE_ENV: JSON.stringify(NODE_ENV),
+        NODE_ENV: JSON.stringify('production'), // Uncomment for production
+        // NODE_ENV: JSON.stringify(NODE_ENV),
       },
     }),
     new HtmlWebpackPlugin({

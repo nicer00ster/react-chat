@@ -80,21 +80,21 @@ export default function userReducer(state = initialState, action = {}) {
         fetching: true,
       };
     case types.FETCH_USERS_SUCCESS:
-      console.log('fetch', action);
+      // console.log('fetch', action);
       return {
         ...state,
         fetching: false,
         offlineUsers: action.users,
       };
     case types.ACTIVE_USERS: {
-      console.log('ACTIVE_USERS', action.users);
+      // console.log('ACTIVE_USERS', action.users);
       return {
         ...state,
         users: action.users.users,
       }
     }
     case types.ADD_USER: {
-      console.log('ADD_USER', action);
+      // console.log('ADD_USER', action);
       return {
         ...state,
         users: state.users.concat([
@@ -120,13 +120,13 @@ export default function userReducer(state = initialState, action = {}) {
       };
     case types.ADD_TYPING_USER:
       // return state.update('usersTyping', (users) => (users.indexOf(action.payload) >= 0 ? users : users.concat(action.payload)));
-      console.log('ADD_TYPING_USER', action);
+      // console.log('ADD_TYPING_USER', action);
       return {
         ...state,
         usersTyping: Object.values(state.offlineUsers).filter(users => users._id === action.payload),
       };
     case types.REMOVE_TYPING_USER:
-      console.log('REMOVE_TYPING_USER', action);
+      // console.log('REMOVE_TYPING_USER', action);
       return {
         ...state,
         usersTyping: Object.values(state.usersTyping).filter(users => users._id !== action.payload),

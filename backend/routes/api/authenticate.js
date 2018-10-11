@@ -204,7 +204,6 @@ module.exports = (app) => {
 
   // deprecating this route since it just gets all channels
   app.get('/api/channels', (req, res) => {
-
     Channel.find({},{ name: 1, id:1, _id:0 }, function(err, data) {
       if(err) {
         console.log(err);
@@ -222,7 +221,6 @@ module.exports = (app) => {
 
   // this route returns all channels including private channels for that user
   app.get('/api/channels/:name', (req, res) => {
-
     Channel.find({ $or: [{ between: req.params.name }, { private: false }] }, {
       name: 1,
       id:1,
@@ -256,7 +254,6 @@ module.exports = (app) => {
     });
   });
 
-  // query DB for ALL messages
  app.get('/api/messages', (req, res) => {
    Message.find({}, {
      id: 1,
@@ -296,7 +293,6 @@ module.exports = (app) => {
    });
  })
 
- //post a new message to db
  app.post('/api/messages/new', function(req, res) {
    const message = new Message(req.body);
    message.save((err, data) => {
@@ -304,7 +300,6 @@ module.exports = (app) => {
        console.log(err);
        return res.status(500).json({ message: 'internal server error' });
      }
-     console.log('new', data);
      res.send({
        success: true,
        message: 'New message posted.',

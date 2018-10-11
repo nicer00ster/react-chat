@@ -22,7 +22,12 @@ function EnhancedInput(props) {
         <Input
           id="inputLabel"
           type="text"
-          onChange={e => props.handleInput(e.target.value, props.channel)}
+          onChange={e => {
+            if(e.target.value === '') {
+              props.removeTypingUser(props.uid);
+            }
+            props.handleInput(e.target.value, props.channel)
+          }}
           value={props.message}
           onKeyPress={e => {
             props.addTypingUser(props.uid);

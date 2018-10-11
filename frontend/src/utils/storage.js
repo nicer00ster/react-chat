@@ -1,5 +1,4 @@
 export function verifyToken(key) {
-  console.log(key);
   if(!key) return null;
   try {
     const val = localStorage.getItem(key);

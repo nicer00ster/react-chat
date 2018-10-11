@@ -4,6 +4,11 @@ const path = require('path');
 const fs = require('fs');
 const axios = require('axios');
 const http = require('http').Server(app);
+// const server = require('https').createServer({
+//   key: fs.readFileSync('backend/client.key'),
+//   cert: fs.readFileSync('backend/client.crt'),
+//   passphrase: 'xxxx',
+// }, app);
 const io = require('socket.io')(http);
 const historyApiFallback = require('connect-history-api-fallback');
 const mongoose = require('mongoose');
@@ -143,7 +148,9 @@ http.listen(port, '0.0.0.0', err => {
   if(err) {
     console.error(err);
   }
-  console.info('🍓🍓 Listening on http://0.0.0.0:%s/ in your browser.', port);
+  console.info('🍓🍓 Listening on https://0.0.0.0:%s/ in your browser.', port);
 });
+
+// server.listen(8081);
 
 module.exports = app;

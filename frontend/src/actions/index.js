@@ -87,7 +87,6 @@ let nextMessageId = 0;
 let nextUserId = 0;
 
 export function addMessage(message, channel, sender) {
-  console.log(message, sender);
   return [{
     type: types.ADD_MESSAGE,
     _id: nextMessageId++,
@@ -114,7 +113,7 @@ export function messageReceived(message, channel, sender) {
 }
 
 export function addUser(name) {
-  console.log('addUser', name);
+  // console.log('addUser', name);
   return {
     type: types.ADD_USER,
     id: nextUserId++,
@@ -130,7 +129,7 @@ export function populateUsersList(users) {
 }
 
 export function addTypingUser(uid) {
-  console.log('addTypingUser', uid);
+  // console.log('addTypingUser', uid);
    return {
      type: types.ADD_TYPING_USER,
      payload: uid,
@@ -138,7 +137,7 @@ export function addTypingUser(uid) {
  }
 
  export function removeTypingUser(uid) {
-   console.log('removeTypingUser', uid);
+   // console.log('removeTypingUser', uid);
    return {
      type: types.REMOVE_TYPING_USER,
      payload: uid,
