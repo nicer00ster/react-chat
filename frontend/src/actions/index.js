@@ -43,14 +43,6 @@ export function logout(user) {
 }
 
 // Chat Actions
-// export function sendMessage(message, to, user) {
-//   return {
-//     type: types.SEND_MESSAGE,
-//     message,
-//     to,
-//     user,
-//   };
-// }
 
 export function focusedUser(user) {
   return {
@@ -113,7 +105,6 @@ export function messageReceived(message, channel, sender) {
 }
 
 export function addUser(name) {
-  // console.log('addUser', name);
   return {
     type: types.ADD_USER,
     id: nextUserId++,
@@ -129,7 +120,6 @@ export function populateUsersList(users) {
 }
 
 export function addTypingUser(uid) {
-  // console.log('addTypingUser', uid);
    return {
      type: types.ADD_TYPING_USER,
      payload: uid,
@@ -137,7 +127,6 @@ export function addTypingUser(uid) {
  }
 
  export function removeTypingUser(uid) {
-   // console.log('removeTypingUser', uid);
    return {
      type: types.REMOVE_TYPING_USER,
      payload: uid,

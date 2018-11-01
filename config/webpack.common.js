@@ -44,8 +44,8 @@ module.exports = {
 
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify('production'), // Uncomment for production
-        // NODE_ENV: JSON.stringify(NODE_ENV),
+        // NODE_ENV: JSON.stringify('production'), // Uncomment for production
+        NODE_ENV: JSON.stringify(NODE_ENV),
       },
     }),
     new HtmlWebpackPlugin({

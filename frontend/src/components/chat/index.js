@@ -28,12 +28,12 @@ class Chat extends React.Component {
           changeChannel={this.props.changeChannel}
           focusedUser={this.props.focusedUser} />
         <EnhancedWrapper>
-          <EnhancedInput
-            message={this.props.chat.message}
-            handleInput={this.props.handleInput}
-            uid={this.props.user.id}
-            channel={this.props.user.currentChannel}
-            username={this.props.user.username} />
+        <EnhancedInput
+          message={this.props.chat.message}
+          handleInput={this.props.handleInput}
+          uid={this.props.user.id}
+          channel={this.props.user.currentChannel}
+          username={this.props.user.username} />
         </EnhancedWrapper>
       </React.Fragment>
     );

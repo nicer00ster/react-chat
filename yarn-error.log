@@ -1,0 +1,119 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js
+
+PATH: 
+  C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Git\cmd;C:\curl;C:\Program Files\PuTTY\;C:\ProgramData\chocolatey\bin;C:\Program Files\Java\jdk1.8.0_162\bin;C:\Program Files\nodejs\;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\Amazon\AWSCLI;C:\Users\Alex\AppData\Local\Programs\Python\Python36-32\;C:\Users\Alex\AppData\Local\Programs\Python\Python36-32\Scripts;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\PostgreSQL\10\bin;C:\Users\Alex\AppData\Roaming\npm\node_modules\react-native-cli;C:\Program Files (x86)\DevDesktop\tools;C:\php;C:\Users\Alex\appdata\local\Android\Sdk\platform-tools;C:\Users\Alex\AppData\Roaming\npm;C:\WINDOWS\system32;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Skype\Phone\;C:\Program Files\Git\cmd;C:\curl;C:\Program Files\PuTTY\;C:\ProgramData\chocolatey\bin;C:\Program Files\Java\jdk1.8.0_162\bin;C:\Program Files\nodejs\;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\Amazon\AWSCLI;C:\Users\Alex\AppData\Local\Programs\Python\Python36-32\;C:\Users\Alex\AppData\Local\Programs\Python\Python36-32\Scripts;C:\WINDOWS;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Java\jdk1.8.0_162\bin;C:\Program Files\Amazon\AWSCLI;C:\Users\Alex\;C:\Users\Alex\AppData\Local\hyper\app-2.0.0\resources\bin;C:\Users\Alex\AppData\Local\atom\bin;C:\Users\Alex\AppData\Roaming\npm\node_modules\react-native-cli;
+
+Yarn version: 
+  1.5.1
+
+Node version: 
+  9.6.1
+
+Platform: 
+  win32 x64
+
+npm manifest: 
+  {
+    "name": "react-chat",
+    "version": "1.0.0",
+    "description": "Chat app for chickens",
+    "main": "index.js",
+    "engines": {
+      "node": ">=6"
+    },
+    "jest": {
+      "setupTestFrameworkScriptFile": "<rootDir>/frontend/src/setupTests.js"
+    },
+    "scripts": {
+      "dev": "node start",
+      "test": "jest",
+      "build": "webpack -p --progress --profile --colors",
+      "start": "node start"
+    },
+    "keywords": [
+      "reactjs"
+    ],
+    "author": "nicer00ster",
+    "license": "ISC",
+    "devDependencies": {
+      "@babel/core": "^7.0.1",
+      "autoprefixer": "^9.1.5",
+      "babel-core": "^6.26.3",
+      "babel-eslint": "^9.0.0",
+      "eslint": "^5.6.0",
+      "eslint-config-airbnb": "^17.1.0",
+      "eslint-plugin-import": "^2.14.0",
+      "eslint-plugin-jsx-a11y": "^6.1.1",
+      "eslint-plugin-react": "^7.11.1",
+      "file-loader": "^2.0.0",
+      "jest": "^23.6.0",
+      "react-tap-event-plugin": "^3.0.3",
+      "regenerator-runtime": "^0.12.1",
+      "webpack-cli": "^3.1.0",
+      "webpack-dev-middleware": "^3.3.0",
+      "webpack-hot-middleware": "^2.24.0"
+    },
+    "dependencies": {
+      "@babel/plugin-proposal-class-properties": "^7.0.0",
+      "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+      "@babel/preset-env": "^7.0.0",
+      "@babel/preset-react": "^7.0.0",
+      "@material-ui/core": "^3.1.1",
+      "@material-ui/icons": "^3.0.1",
+      "axios": "^0.18.0",
+      "babel-loader": "^8.0.2",
+      "babel-plugin-transform-class-properties": "^6.24.1",
+      "babel-polyfill": "^6.26.0",
+      "bcrypt-nodejs": "^0.0.3",
+      "classnames": "^2.2.6",
+      "connect-history-api-fallback": "^1.5.0",
+      "css-loader": "^1.0.0",
+      "enzyme": "^3.6.0",
+      "enzyme-adapter-react-16": "^1.5.0",
+      "express": "^4.16.3",
+      "html-webpack-plugin": "^3.2.0",
+      "mongoose": "^5.2.18",
+      "node-sass": "^4.9.3",
+      "nodemon": "^1.18.4",
+      "normalize.css": "^8.0.0",
+      "postcss-loader": "^3.0.0",
+      "prop-types": "^15.6.2",
+      "react": "^16.5.1",
+      "react-dom": "^16.5.1",
+      "react-hot-loader": "^4.3.8",
+      "react-redux": "^5.0.7",
+      "react-router": "^4.3.1",
+      "react-router-dom": "^4.3.1",
+      "react-router-transition": "^1.2.1",
+      "react-spinkit": "^3.0.0",
+      "react-test-renderer": "^16.5.1",
+      "redux": "^4.0.0",
+      "redux-devtools-extension": "^2.13.5",
+      "redux-multi": "^0.1.12",
+      "redux-saga": "^0.16.0",
+      "sass-loader": "^7.1.0",
+      "socket.io": "^2.1.1",
+      "style-loader": "^0.23.0",
+      "webpack": "^4.19.0",
+      "webpack-merge": "^4.1.4",
+      "ws": "^6.0.0"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  Error: Found incompatible module
+      at new MessageError (C:\Program Files (x86)\Yarn\lib\cli.js:186:110)
+      at checkOne (C:\Program Files (x86)\Yarn\lib\cli.js:62444:11)
+      at Object.check (C:\Program Files (x86)\Yarn\lib\cli.js:62463:5)
+      at C:\Program Files (x86)\Yarn\lib\cli.js:22803:73
+      at Generator.next (<anonymous>)
+      at step (C:\Program Files (x86)\Yarn\lib\cli.js:98:30)
+      at C:\Program Files (x86)\Yarn\lib\cli.js:109:13
+      at <anonymous>

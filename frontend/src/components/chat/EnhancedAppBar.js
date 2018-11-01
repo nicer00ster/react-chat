@@ -11,7 +11,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import MeetingRoom from '@material-ui/icons/MeetingRoom';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Code from '@material-ui/icons/Code';
-// import FastFood from '@material-ui/icons/FastFood';
+import FastFood from '@material-ui/icons/FastFood';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import { withStyles } from '@material-ui/core/styles';
@@ -67,7 +67,7 @@ function EnhancedAppBar(props) {
                 className={buttonClassname}
                 onClick={() => props.changeChannel('food')}
                 color="secondary">
-                {/* <FastFood /> */}
+                <FastFood />
                 {props.chat.fetching && <CircularProgress size={42} className={classes.fabProgress} />}
               </Button>
             </Tooltip>

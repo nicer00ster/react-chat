@@ -17,7 +17,6 @@ export default function authReducer(state = initialState, action = {}) {
         sending: true,
       };
     case types.SEND_MESSAGE_SUCCESS:
-    // console.log('SEND_MESSAGE_SUCCESS', action);
       return {
         ...state,
         sending: false,
@@ -30,7 +29,6 @@ export default function authReducer(state = initialState, action = {}) {
         error: action.error,
       };
     case types.INPUT:
-    // console.log('INPUT', action);
       return {
         ...state,
         message: action.input,
@@ -60,7 +58,6 @@ export default function authReducer(state = initialState, action = {}) {
       };
     case types.ADD_MESSAGE:
     case types.MESSAGE_RECEIVED:
-    // console.log('ADD_MESSAGE', action);
       return {
         ...state,
         message: '',
@@ -79,7 +76,6 @@ export default function authReducer(state = initialState, action = {}) {
         fetching: true,
       }
     case types.FETCH_CHANNELS_SUCCESS:
-    // console.log('fetch-chanels succes', action.channels.data);
       return {
         ...state,
         fetching: false,

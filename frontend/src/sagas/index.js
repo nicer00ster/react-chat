@@ -82,7 +82,6 @@ function apiCreateChannel(data) {
 }
 
 function apiNewMessage(data) {
-  // console.log('apiNewMessage', data);
   return axios({
     method: 'post',
     url: '/api/messages/new',
@@ -183,7 +182,6 @@ function* fetchMessagesSaga(data) {
   try {
     const response = yield call(apiFetchMessages, data);
     const result = response.data;
-    // console.log('saga messages fetchng;', result);
     if(result.success) {
       yield put({ type: types.FETCH_MESSAGES_SUCCESS, messages: result });
     } else yield put({ type: types.FETCH_MESSAGES_FAILURE, error: result.message });
@@ -197,7 +195,6 @@ function* fetchChannelSaga(data) {
   try {
     const response = yield call(apiFetchChannels, data);
     const result = response.data;
-    // console.log('saga channe;', result);
     if(result.success) {
       yield put({ type: types.FETCH_CHANNELS_SUCCESS, channels: result });
     } else yield put({ type: types.FETCH_CHANNELS_FAILURE, error: result.message });
@@ -209,7 +206,6 @@ function* fetchChannelSaga(data) {
 function* verifyTokenSaga() {
   try {
     const response = yield call(apiVerify);
-    // console.log('verifyTokenSaga', response);
     if (response.data.success) {
       yield put({ type: types.VERIFIED_SUCCESS, data: response.data });
     } else yield put({ type: types.VERIFIED_FAILURE, data: response.data });
@@ -221,7 +217,6 @@ function* verifyTokenSaga() {
 function* fetchUsersSaga() {
   try {
     const response = yield call(apiFetchUsers);
-    // console.log('fetchUsersSaga', response);
     yield put({ type: types.FETCH_USERS_SUCCESS, users: response.data });
   } catch (error) {
     yield put({ type: types.FETCH_USERS_FAILURE, error });
@@ -230,18 +225,15 @@ function* fetchUsersSaga() {
 
 function* isTyping(socket) {
   const { payload } = yield take(types.ADD_TYPING_USER);
-  // console.log('saga typing here', payload);
   socket.emit('is typing', payload);
 }
 
 function* stoppedTyping(socket) {
   const { payload } = yield take(types.REMOVE_TYPING_USER);
-  // console.log('remove typing payload', payload);
   socket.emit('stopped typing', payload);
 }
 
 function* rootSaga(params) {
-  // console.log('socket', params);
   yield all([
     takeEvery(types.REGISTER, registerSaga),
     takeEvery(types.LOGIN, loginSaga),
